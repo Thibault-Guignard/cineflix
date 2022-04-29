@@ -2,30 +2,28 @@
 
 namespace App\Controller;
 
+use App\Model\Movies;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
     /**
+     * Affiche la page d'accueil
+     * 
+     * @return Response
      * @Route("/", name="home", methods={"GET"})
      */
-    public function home()
+    public function home(): Response
     {
-        //echo "Je suis la home !";
 
-        $response = new Response("<h1>Je suis la home !</h1>");
-        return $response;
-    }
-
-    /**
-     * @Route("/toto")
-     */
-    public function toto()
-    {
-        //echo "Je suis la home !";
-
-        return $this->render('main/home.html.twig');
+        // on récupère les données depuis le modèle
+        $moviesModel = new Movies();
+        $moviesList = $moviesModel->getAllMovies();    
+    
+        return $this->render('main/home.html.twig', [
+            'moviesList' => $moviesList,
+        ]);
     }
 }
