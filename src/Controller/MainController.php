@@ -18,4 +18,15 @@ class MainController extends AbstractController
         $response = new Response("<h1>Je suis la home !</h1>");
         return $response;
     }
+
+    /**
+     * @Route("/toto")
+     */
+    public function toto()
+    {
+        //echo "Je suis la home !";
+
+        $response = new Response("<h1>Je suis la route toto !</h1>");
+        return $response;
+    }
 }
