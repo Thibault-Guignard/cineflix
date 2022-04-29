@@ -26,7 +26,6 @@ class MainController extends AbstractController
     {
         //echo "Je suis la home !";
 
-        $response = new Response("<h1>Je suis la route toto !</h1>");
-        return $response;
+        return $this->render('main/home.html.twig');
     }
 }
