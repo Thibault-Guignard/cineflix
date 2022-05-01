@@ -56,4 +56,14 @@ class Movies
     {
         return $this->shows;
     }
+
+    /**
+     * Retourner les element d'un film dans un tableau
+     * 
+     * @return array
+     */
+    public function getMovie($id): array
+    {
+        return $this->shows[$id];
+    }
 }
