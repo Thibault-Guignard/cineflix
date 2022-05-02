@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/api/movies", name="app_api")
+     * @Route("/api/movies", name="app_api" , methods={"GET"})
      */
     public function moviesCollection(): Response
     {

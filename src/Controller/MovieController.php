@@ -18,7 +18,13 @@ class MovieController extends AbstractController
      */
     public function list(): Response
     {
-        return $this->render('movie/list.html.twig');
+        // on récupère les données depuis le modèle
+        $moviesModel = new Movies();
+        $moviesList = $moviesModel->getAllMovies();   
+
+        return $this->render('movie/list.html.twig',[
+            'moviesList' => $moviesList,
+        ]);
     }
 
     /**
