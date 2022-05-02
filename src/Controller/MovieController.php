@@ -9,18 +9,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MovieController extends AbstractController
 {
+
+    /**
+     * Display alls movies
+     *
+     * @return Response
+     * @Route("/movie/list", name="movie_list")
+     */
+    public function list(): Response
+    {
+        return $this->render('movie/list.html.twig');
+    }
+
     /**
      * Display one movie with this {id}
      *
      * @param integer $id
      * @return Response
-     * @Route("/movie/{id}" , name="movie_show" , methods={"GET"})
+     * @Route("/movie/{id}" , name="movie_show" , methods={"GET"}, requirements={"id"="\d+"})
      */
     public function show(int $id): Response
     {
+
         // on récupère les données depuis le modèle
         $moviesModel = new Movies();
-        $movie = $moviesModel->getMovieById($id);    
+        $movie = $moviesModel->getMovieById($id);
+        
+        if ($movie === null) {
+            throw $this->createNotFoundException('Le film ou la série n\'existe pas');
+        }
 
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,
@@ -41,16 +58,6 @@ class MovieController extends AbstractController
         ]);
     }
 
-    /**
-     * Display alls movies
-     *
-     * @return Response
-     * @Route("/movie/list", name="movie_list")
-     */
-    public function list(): Response
-    {
 
-        return $this->render('movie/movie.html.twig');
-    }
 
 }
