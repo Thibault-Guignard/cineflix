@@ -60,10 +60,16 @@ class Movies
     /**
      * Retourner les element d'un film dans un tableau
      * 
-     * @return array
+     * @param int $id id du film recherché
+     * @return array|null show data or null if not found
      */
-    public function getMovie($id): array
+    public function getMovieById($id): ?array
     {
+        //l'index est il absent  dans le tableau ?
+        if (!array_key_exists($id, $this->shows)) {
+            return null;
+        } 
+        // l'index existe on retourne le resultat
         return $this->shows[$id];
     }
 }

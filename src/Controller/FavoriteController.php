@@ -7,19 +7,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class UserController extends AbstractController
+class FavoriteController extends AbstractController
 {
     /**
      * Display all favorites films for one user
      *
      * @param integer $userId identifiant of user
      * @return Response
-     * @Route("/user/{userId}/favorites",name="user_favorites",methods={"GET"})
+     * @Route("/favorites",name="favorites-list",methods={"GET"})
      */
-    public function search(int $userId):Response
+    public function list():Response
     {
-        return $this->render('user/favorites.html.twig', [
-            'user' => $userId,
+        return $this->render('favorites/list.html.twig', [
+            
         ]);
     }
 }

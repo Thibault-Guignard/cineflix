@@ -27,21 +27,4 @@ class MainController extends AbstractController
         ]);
     }
 
-
-    /**
-     * Affiche la page d'accueil
-     * @param string $searching recherche lancé par l'utilisateur
-     * 
-     * @return Response
-     * @Route("/search/{searching}", name="search", methods={"GET"})
-     */
-    public function search(string $searching): Response
-    { 
-    
-        return $this->render('main/search.html.twig', [
-            'search' => $searching,
-        ]);
-    }
-
-
 }

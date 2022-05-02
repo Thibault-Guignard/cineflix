@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 
+
 {% block title %}O'flix - {{movie.title}}{% endblock %}
 
 {# On vient redéfinir / surcharger / override le contenu du block body #}
@@ -15,13 +16,13 @@
                 class="row g-0 borderrr rrrounded overflow-hidden flex-md-row align-items-start mb-4 shadow-smmm position-relative">
                 <div class="col-4 movie__poster img-thumbnail"
                     style="background-image: url({{movie.poster}});">
-                    <img src="images/poster-placeholder.png" class="img-fluid">
+                    <img src="{{asset('images/poster-placeholder.png')}}" class="img-fluid">
                     <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
                 </div>
 
                 <div class="col-8 p-4 d-flex flex-column position-static bg-light">
                     <a href="" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
-                    <strong class="d-inline-block mb-2 text-primary">{{movie.type}}</strong>
+                    <strong class="d-inline-block mb-2 {% if movie.type == 'Film' %} text-primary {% else %} text-success {% endif %}">{{movie.type}}</strong>
                     <h3 class="mb-1">{{movie.title}}</h3>
                     <div class="mb-1 text-muted">{{movie.duration}}</div>
                     <p>
@@ -29,7 +30,8 @@
                         <span class="badge bg-warning text-dark">Aventure</span>
                         <span class="badge bg-warning text-dark">Comédie</span>
                         <span class="badge bg-warning text-dark">Famille</span>
-                    </p>{{movie.synopsis}}</p>
+                    </p>
+                    <p>{{movie.synopsis}}</p>
 
                     <div class="d-flex mb-4" style="color: orange;">
                         {% for star in 1..5  %}                
@@ -58,7 +60,7 @@
                         <dt class="col-sm-12">Pays</dt>
                         <dd class="col-sm-12">USA</dd>
                         <dt class="col-sm-12">Année</dt>
-                        <dd class="col-sm-12">1998</dd>
+                        <dd class="col-sm-12">{{movie.release_date}}</dd>
                     </dl>
 
                 </div>
@@ -71,3 +73,4 @@
 </div>
 
 {% endblock %}
+
