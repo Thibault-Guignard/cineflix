@@ -3,6 +3,7 @@
 | URL                 | Méthode HTTP | Contrôleur           | Méthode            | Titre HTML                          | Commentaire                              |
 | ------------------- | ------------ | -------------------- | ------------------ | ----------------------------------- | ---------------------------------------- |
 | `/`                 | `GET`        | `MainController`     | `home`             | Bienvenue sur O'flix                | Page d'accueil                           |
+| `/theme/toggle`     | `GET`        | `MainController`     | `themeToggle`      | changement de theme                 | vchangement de theme                     |
 | `/movie/{id}`       | `GET`        | `MovieController`    | `show`             | O'flix - Titre du film/série        | Page détails d'un film/série             |
 | `/movie/list`       | `GET`        | `MovieController`    | `list`             | Liste des films et séries           | Affichage list filmms et series          |
 | `/movie/genre/{id}` | `GET`        | `MovieController`    | `listByGenre`      | Liste des films et séries par genre | Affichage list films et series par genre |
