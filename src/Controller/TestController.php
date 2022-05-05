@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Genre;
 use App\Entity\Movie;
+use App\Entity\Season;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,5 +129,35 @@ class TestController extends AbstractController
         $entityManager->flush();
 
         dd('Entité supprimé',$movie);
+    }
+
+    /**
+     * Ajout d'une saison a un film existant
+     * 
+     * @Route("/test/season/add", name="season_add")
+     */
+    public function seasonAdd(ManagerRegistry $doctrine)
+    {
+        //on va recuperer le série X-Files
+        $xFiles = $doctrine->getRepository(Movie::class)->find(5);
+
+        //créer une saison
+        $season = new Season();
+        //Saison 1
+        $season->setNumber(1);
+        // 24 episodes
+        $season->setEpisodesNumber(24);
+
+        //L'associer a la serie voulue
+        $season->setMovie($xFiles);
+
+        //sauvagerder
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($season);
+        $entityManager->flush();
+
+        dd($season);
+
+
     }
 }
