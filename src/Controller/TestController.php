@@ -55,7 +55,11 @@ class TestController extends AbstractController
 
         // todo@ gérer la 404
 
-        dd($movie);
+        dump($movie);
+
+        return $this->render('test/show.html.twig',[
+            'movie' => $movie,
+        ]);
     }
 
     /**
@@ -144,17 +148,18 @@ class TestController extends AbstractController
         //créer une saison
         $season = new Season();
         //Saison 1
-        $season->setNumber(1);
+        $season->setNumber(2);
         // 24 episodes
-        $season->setEpisodesNumber(24);
+        $season->setEpisodesNumber(25);
 
         //L'associer a la serie voulue
-        $season->setMovie($xFiles);
+        //$season->setMovie($xFiles);
+        $xFiles->addSeason($season);
 
         //sauvagerder
         $entityManager = $doctrine->getManager();
         $entityManager->persist($season);
-        $entityManager->flush();
+        $entityManager->flush(); 
 
         dd($season);
 

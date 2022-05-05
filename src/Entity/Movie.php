@@ -35,7 +35,7 @@ class Movie
     private $duration;
 
     /**
-     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie", orphanRemoval=true, fetch="EAGER")
      */
     private $seasons;
 
