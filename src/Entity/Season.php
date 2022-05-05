@@ -27,6 +27,12 @@ class Season
      */
     private $episodesNumber;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="seasons")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $movie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Season
     public function setEpisodesNumber(int $episodesNumber): self
     {
         $this->episodesNumber = $episodesNumber;
+
+        return $this;
+    }
+
+    public function getMovie(): ?Movie
+    {
+        return $this->movie;
+    }
+
+    public function setMovie(?Movie $movie): self
+    {
+        $this->movie = $movie;
 
         return $this;
     }
