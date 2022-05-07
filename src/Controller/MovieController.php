@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Model\Movies;
+use App\Entity\Movie;
+use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,11 +17,10 @@ class MovieController extends AbstractController
      * @return Response
      * @Route("/movie/list", name="movie_list")
      */
-    public function list(): Response
+    public function list(MovieRepository $movieRepository): Response
     {
         // on récupère les données depuis le modèle
-        $moviesModel = new Movies();
-        $moviesList = $moviesModel->getAllMovies();   
+        $moviesList = $movieRepository->findAll();   
 
         return $this->render('movie/list.html.twig',[
             'moviesList' => $moviesList,
@@ -30,16 +30,15 @@ class MovieController extends AbstractController
     /**
      * Display one movie with this {id}
      *
-     * @param integer $id
+     * @param $id
      * @return Response
      * @Route("/movie/{id}" , name="movie_show" , methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show(int $id): Response
+    public function show($id ,MovieRepository $movieRepository): Response
     {
 
-        // on récupère les données depuis le modèle
-        $moviesModel = new Movies();
-        $movie = $moviesModel->getMovieById($id);
+        // on récupère les données 
+        $movie = $movieRepository->find($id);
         
         if ($movie === null) {
             throw $this->createNotFoundException('Le film ou la série n\'existe pas');

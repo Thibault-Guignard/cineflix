@@ -22,7 +22,11 @@ class MainController extends AbstractController
     {
 
         // on récupère les données depuis le modèle
-        $moviesList = $movieRepository->findAll();  
+        $moviesList = $movieRepository->findBy(
+            [],
+            [],
+            5
+        );  
     
         return $this->render('main/home.html.twig', [
             'moviesList' => $moviesList,
