@@ -49,6 +49,28 @@ class Movie
      */
     private $genres;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $summary;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $synopsis;
+
+    /**
+     * @ORM\Column(type="string", length=2003)
+     */
+    private $poster;
+
+    /**
+     * @ORM\Column(type="decimal", precision=3, scale=2)
+     */
+    private $rating;
+
+
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -180,4 +202,54 @@ class Movie
 
         return $this;
     }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    public function setSummary(string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getSynopsis(): ?string
+    {
+        return $this->synopsis;
+    }
+
+    public function setSynopsis(string $synopsis): self
+    {
+        $this->synopsis = $synopsis;
+
+        return $this;
+    }
+
+    public function getPoster(): ?string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(string $poster): self
+    {
+        $this->poster = $poster;
+
+        return $this;
+    }
+
+    public function getRating(): ?string
+    {
+        return $this->rating;
+    }
+
+    public function setRating(string $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+
 }

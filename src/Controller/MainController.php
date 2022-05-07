@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Model\Movies;
+use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -16,12 +18,11 @@ class MainController extends AbstractController
      * @return Response
      * @Route("/", name="home", methods={"GET"})
      */
-    public function home(): Response
+    public function home(MovieRepository $movieRepository): Response
     {
 
         // on récupère les données depuis le modèle
-        $moviesModel = new Movies();
-        $moviesList = $moviesModel->getAllMovies();    
+        $moviesList = $movieRepository->findAll();  
     
         return $this->render('main/home.html.twig', [
             'moviesList' => $moviesList,
