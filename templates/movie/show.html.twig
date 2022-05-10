@@ -59,9 +59,13 @@
                     <dl class="row">
                         <dt class="col-sm-12">Avec</dt>
                         <dd class="col-sm-12">
-                            {% for casting in movie.castings %}
+                        {% for casting in castingList %}
                                 {{casting.person.firstname}} {{casting.person.lastname}} ({{casting.role}}) ({{casting.creditOrder}})<br> 
-                            {% endfor %}
+                        {% endfor %}
+                        {#  {% for casting in movie.castings %}
+                                {{casting.person.firstname}} {{casting.person.lastname}} ({{casting.role}}) ({{casting.creditOrder}})<br> 
+                            {% endfor %} 
+                         #}
                         </dd>
                         <dt class="col-sm-12">Pays</dt>
                         <dd class="col-sm-12">USA</dd>
