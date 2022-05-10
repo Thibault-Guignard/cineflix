@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Movie;
 use App\Entity\Casting;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Casting>
@@ -46,6 +47,50 @@ class CastingRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    /**
+     * Casting for the movie page (joined to Person)
+     * 
+     * @param Movie $movies Movie to get casting from
+     */
+    public function findAllByMovieJoinedToPerson(Movie $movie)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c, p                -- ramene moi les objets Casting et Person
+            FROM App\Entity\Casting c   -- Depuis l\'entite casting 
+            INNER JOIN c.person p       -- Fait la jointure sur la personne liée au casting
+            WHERE c.movie = :movie      -- Ou le film du casting est le film donné
+            ORDER BY c.creditOrder ASC'
+        )->setParameter('movie', $movie);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Castings for the movie page (joined to Person)
+     * 
+     * <3 Bruno
+     */
+    public function findCastingOfMovieQB($movie)
+    {
+        // Va me chercher les castings
+        return $this->createQueryBuilder('c')
+            // Dont le film est fourni
+            ->where('c.movie = :movie')
+            // Fais une jointure sur l'entité Person
+            ->innerJoin('c.person', 'p')
+            // Ajoute les objets de type Person aux résultats
+            ->addSelect('p')
+            // (pour le film fourni)
+            ->setParameter('movie', $movie)
+            ->orderBy('c.creditOrder', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
     // /**
     //  * @return Casting[] Returns an array of Casting objects

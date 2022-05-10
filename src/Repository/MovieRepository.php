@@ -79,6 +79,38 @@ class MovieRepository extends ServiceEntityRepository
     
     }
 
+    /**
+     * Find 10 last films order by release date (QB)
+     */
+    public function findAllOrderedByRealaseDateDscQB()
+    {
+        return $this->createQueryBuilder('m')
+                    ->orderBy('m.releaseDate', 'DESC')
+                    ->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * Find all oredered by release date ASC by DQL
+     */
+    public function findAllOrderedByRealaseDateDscDBL()
+    {
+        //L'EM est nécessaire pour créer une requete
+        $entityManager = $this->getEntityManager();
+
+        //on créer une requete depuis l'EM
+        //En Doctrine Query Language (DQL)
+        $query = $entityManager->createQuery(
+            'SELECT m
+            FROM App\Entity\Movie m
+            ORDER BY m.releaseDate DESC'
+        )->setMaxResults(10);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */

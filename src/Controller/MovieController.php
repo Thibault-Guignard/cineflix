@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,10 +49,12 @@ class MovieController extends AbstractController
             throw $this->createNotFoundException('Le film ou la série n\'existe pas');
         }
 
-        $castingList = $castingRepository->findBy(
+        /* $castingList = $castingRepository->findBy(
             ['movie' => $movie], 
             ['creditOrder' => 'ASC']
-        );
+        ); */
+
+        $castingList = $castingRepository->findAllByMovieJoinedToPerson($movie);
 
         return $this->render('movie/show.html.twig', [
             'movie' => $movie,

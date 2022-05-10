@@ -23,11 +23,13 @@ class MainController extends AbstractController
 
         // on récupère les données depuis le modèle
         //trier oar date de sortie releaseDate
-        $moviesList = $movieRepository->findBy(
+        /*         $moviesList = $movieRepository->findBy(
             [],
             ['releaseDate' => 'DESC'],
             10,
-        );
+        ); */
+
+        $moviesList = $movieRepository->findAllOrderedByRealaseDateDscDBL();
     
         return $this->render('main/home.html.twig', [
             'moviesList' => $moviesList,
