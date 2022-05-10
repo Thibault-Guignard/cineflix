@@ -8,6 +8,7 @@ use App\Entity\Movie;
 use App\Entity\Season;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,22 @@ class TestController extends AbstractController
 
         dd($fantastique);
     }
+
+    /**
+     * @Route("/test/genre/{name}", name="test_genre_add")
+     */
+    public function readGenre($name ,ManagerRegistry $manage)
+    {
+        // On crée un objet Genre
+        $genre = $manage->getRepository(Genre::class)->findOneBy(
+            ['name' => $name]
+        );
+
+
+        dd($genre);
+    }
+
+    
 
     /**
      * Browse : lister tous les films!
