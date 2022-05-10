@@ -51,7 +51,7 @@ class Movie
     private $genres;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
     private $summary;
 
@@ -66,9 +66,14 @@ class Movie
     private $poster;
 
     /**
-     * @ORM\Column(type="decimal", precision=3, scale=2)
+     * @ORM\Column(type="decimal", precision=2, scale=1,nullable=true)
      */
     private $rating;
+
+    /**
+     * @ORM\Column(type="string", length=6)
+     */
+    private $type;
 
 
 
@@ -248,6 +253,18 @@ class Movie
     public function setRating(string $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
