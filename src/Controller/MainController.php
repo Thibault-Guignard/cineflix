@@ -22,11 +22,12 @@ class MainController extends AbstractController
     {
 
         // on récupère les données depuis le modèle
+        //trier oar date de sortie releaseDate
         $moviesList = $movieRepository->findBy(
             [],
-            [],
-            5
-        );  
+            ['releaseDate' => 'DESC'],
+            10,
+        );
     
         return $this->render('main/home.html.twig', [
             'moviesList' => $moviesList,

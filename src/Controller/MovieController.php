@@ -20,7 +20,11 @@ class MovieController extends AbstractController
     public function list(MovieRepository $movieRepository): Response
     {
         // on récupère les données depuis le modèle
-        $moviesList = $movieRepository->findAll();   
+        // par ordre alphabeitque
+        $moviesList = $movieRepository->findBy(
+            [],
+            ['title' => 'ASC']
+        );
 
         return $this->render('movie/list.html.twig',[
             'moviesList' => $moviesList,
@@ -34,11 +38,8 @@ class MovieController extends AbstractController
      * @return Response
      * @Route("/movie/{id}" , name="movie_show" , methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show($id ,MovieRepository $movieRepository): Response
+    public function show(Movie $movie): Response
     {
-
-        // on récupère les données 
-        $movie = $movieRepository->find($id);
         
         if ($movie === null) {
             throw $this->createNotFoundException('Le film ou la série n\'existe pas');
