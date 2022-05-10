@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 
-{% block title %}O'flix - {{movie.title}}{% endblock %}
+{% block title %}{{movie.title}}{% endblock %}
 
 {# On vient redéfinir / surcharger / override le contenu du block body #}
 {% block body %}
@@ -25,16 +25,19 @@
                         <strong class="d-inline-block mb-2 {% if movie.type == 'Film' %} text-primary {% else %} text-success {% endif %}">{{movie.type}}</strong> 
                     <h3 class="mb-1">{{movie.title}}</h3>
                     <div class="mb-1 text-muted">{{movie.duration}} min</div>
+
                     <p>
+
                         {% for genre in movie.genres %}
                             <span class="badge bg-warning text-dark">{{genre.name}}</span>    
                         {% endfor %}
                         
-
                     </p>
+
                     <p>{{movie.synopsis}}</p>
 
                     <div class="d-flex mb-4" style="color: orange;">
+
                         {% for star in 1..5  %}                
                             <i class="bi bi-star{% if star <=  movie.rating  %}-fill        
                                                 {% elseif (star-movie.rating) < 0.5 %}-half
