@@ -22,10 +22,12 @@ class MovieController extends AbstractController
     {
         // on récupère les données depuis le modèle
         // par ordre alphabeitque
-        $moviesList = $movieRepository->findBy(
+        /* $moviesList = $movieRepository->findBy(
             [],
             ['title' => 'ASC']
-        );
+        ); */
+
+        $moviesList =$movieRepository->findAllOrderedByTitleASC();
 
         return $this->render('movie/list.html.twig',[
             'moviesList' => $moviesList,

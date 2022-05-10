@@ -47,6 +47,38 @@ class MovieRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Find all oredered by title ASC by DQL
+     */
+    public function findAllOrderedByTitleASC()
+    {
+        //L'EM est nécessaire pour créer une requete
+        $entityManager = $this->getEntityManager();
+
+        //on créer une requete depuis l'EM
+        //En Doctrine Query Language (DQL)
+        $query = $entityManager->createQuery(
+            'SELECT m
+            FROM App\Entity\Movie m
+            ORDER BY m.title ASC'
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
+    /**
+     * Find all oredered by title ASC by Query Builder
+     */
+    public function findAllOrderedByTitleAscQB()
+    {
+        return $this->createQueryBuilder('m')
+                    ->orderBy('m.title', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    
+    }
+
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */
