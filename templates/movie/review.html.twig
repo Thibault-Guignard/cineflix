@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Critique - {{movie.title}} {% endblock %}
+
+{# On vient redéfinir / surcharger / override le contenu du block body #}
+{% block body %}
+<div class="container bg-lighttt pt-5">
+
+    <div class="row mb-2">
+
+        <div class="col">
+            <h1>Ajout une critique sur le film {{movie.title}}</h1>
+
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'form__post'}}) }}
+
+            {# Rend tous les champs du formulaire #}
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
