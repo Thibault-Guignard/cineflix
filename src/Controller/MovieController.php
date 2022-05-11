@@ -108,10 +108,10 @@ class MovieController extends AbstractController
             // On exécute les requêtes SQL
             $entityManager->flush();
 
-            dd($review);
+            //dd($review);
 
             // On redirige vers la liste
-            return $this->redirectToRoute('movie_show');
+            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
 
         }
 
