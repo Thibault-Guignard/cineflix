@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
         for ($m = 1; $m <= 10; $m++) {             
             $movie = new Movie();
             //titre
-            $movie->setTitle($oflixProvider->movieTitle());
+            $movie->setTitle($faker->unique()->movieTitle());
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
             //Description page liste et page show
