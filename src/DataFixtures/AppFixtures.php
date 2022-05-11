@@ -2,26 +2,31 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
+use Faker;
+use App\DataFixtures\Provider\OflixProvider;
+
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Season;
+use App\Entity\Casting;
 
 use DateTimeImmutable;
 
-use App\Entity\Casting;
-use App\DataFixtures\Data\GenreData;
-use App\DataFixtures\Provider\OflixProvider;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $faker = Faker\Factory::create('fr_FR');        
+
         // on instancie notre provider custom O'Flix
         $oflixProvider = new OflixProvider();
-        // New Genre
+
         // Les genres
         // créer les genres et les stocker (dans un tableau)
         // (on peut aller chercher les noms de genres dans le tableau)
@@ -48,8 +53,8 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 100; $i++) {
             // Nouvelle Person
             $person = new Person();
-            $person->setFirstname('Prénom #' . $i);
-            $person->setLastname('Nom #' . $i);
+            $person->setFirstname($faker->firstName());
+            $person->setLastname($faker->lastName());
             // On l'ajoute à la liste pour usage ultérieur
             $personsList[] = $person;
             // On persiste
@@ -59,18 +64,19 @@ class AppFixtures extends Fixture
         // Les films
         for ($m = 1; $m <= 10; $m++) {             
             $movie = new Movie();
-
-            $type = mt_rand(1,2) == 1 ? "Film" : "Série";
-            $movie->setType($type);
-            $movie->setSynopsis('Aenean blandit, tortor ac pellentesque luctus, arcu enim aliquam augue, ac malesuada est magna a elit. Integer venenatis lacus id elit lacinia tincidunt. Cras purus leo, faucibus dictum dictum id, convallis id neque. Pellentesque consequat lorem a lacus egestas tempor. Nunc rutrum, ipsum interdum ullamcorper porta, metus velit faucibus lorem, in ullamcorper ligula odio a ipsum. In scelerisque enim eget sem vehicula, eu aliquet neque accumsan. Curabitur sit amet eros ut dui congue tristique et nec erat. Pellentesque est lorem, eleifend ac feugiat sit amet, scelerisque ut odio. Cras vel lectus ante. Sed est elit, fermentum sit amet neque a, tincidunt gravida urna. Proin hendrerit ex at lorem cursus tincidunt. Nunc ultricies rhoncus iaculis.');
             //titre
             $movie->setTitle($oflixProvider->movieTitle());
-            $movie->setSummary('Résumé de la '. $type .' #'.$m);
-            $movie->setReleaseDate(new DateTimeImmutable('-' . mt_rand(1, 3000) . ' day'));
+            //Type
+            $movie->setType($faker->randomElement(['Film','Série']));
+            //Description page liste et page show
+            $movie->setSummary($faker->paragraph());
+            $movie->setSynopsis($faker->text(300));
+            //Date
+            $movie->setReleaseDate($faker->dateTimeBetween('-100 years'));
             // Entre 30 min et 263 minutes
-            $movie->setDuration(mt_rand(30, 263));
-            $movie->setPoster('https://picsum.photos/id/'.mt_rand(1, 100).'/450/300');
-            $movie->setRating(mt_rand(10, 50)/10);
+            $movie->setDuration($faker->numberBetween(30,263));
+            $movie->setPoster('https://picsum.photos/id/'.$faker->numberBetween(1, 100).'/450/300');
+            $movie->setRating($faker->randomFloat(1, 0, 5));
 
             // Add Seasons
             // On vérifie si l'entitéeMovie est une série ou pas
@@ -112,7 +118,7 @@ class AppFixtures extends Fixture
             for ($c = 1; $c <= mt_rand(3, 10); $c++) {
                 $casting = new Casting();
                 // Les propriétés role et creditOrder
-                $casting->setRole('Rôle #' . $c);
+                $casting->setRole($faker->name());
                 $casting->setCreditOrder($c);
 
                 // Les 2 associations

@@ -48,7 +48,7 @@
                     </div>
 
                     {% if movie.seasons|length > 0 %}
-                    <h2>{{movie.seasons|length}} Saisons</h2>
+                    <h2>{{movie.seasons|length}} Saison{{ movie.seasons.count() > 1 ? 's' }}</h2>
                     <ul class="list-unstyled">
                         {% for season in movie.seasons %}
                             <li><span class="badge bg-danger fs-6 mb-2">Saison {{season.number}}</span><small class="ms-1">({{season.episodesNumber}} épisodes)</small></li>
@@ -60,7 +60,7 @@
                         <dt class="col-sm-12">Avec</dt>
                         <dd class="col-sm-12">
                         {% for casting in castingList %}
-                                {{casting.person.firstname}} {{casting.person.lastname}} ({{casting.role}})<br> 
+                                {{casting.person.firstname}} {{casting.person.lastname}} (<i>{{casting.role}}</i>)<br> 
                         {% endfor %}
                         {#  {% for casting in movie.castings %}
                                 {{casting.person.firstname}} {{casting.person.lastname}} ({{casting.role}}) ({{casting.creditOrder}})<br> 
