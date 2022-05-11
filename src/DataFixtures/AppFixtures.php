@@ -26,6 +26,8 @@ class AppFixtures extends Fixture
 
         // on instancie notre provider custom O'Flix
         $oflixProvider = new OflixProvider();
+        //on ajoute notre provider a Faker
+        $faker->addProvider($oflixProvider);
 
         // Les genres
         // créer les genres et les stocker (dans un tableau)
@@ -34,11 +36,11 @@ class AppFixtures extends Fixture
         // Tableau vide pour nos genres
         $genresList = [];
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
 
             // Nouveau genre
             $genre = new Genre();
-            $genre->setName($oflixProvider->movieGenre());
+            $genre->setName($faker->unique()->movieGenre());
 
             // On l'ajoute à la liste pour usage ultérieur
             // Patch pour éviter les doublons
