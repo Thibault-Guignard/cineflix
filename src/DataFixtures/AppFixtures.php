@@ -22,14 +22,25 @@ class AppFixtures extends Fixture
         // on instancie notre provider custom O'Flix
         $oflixProvider = new OflixProvider();
         // New Genre
-        $genreModel = new GenreData();
-        $genreData = $genreModel->getGenreData();
-        $newGenre = [];
-        for ($i = 0; $i < count($genreData); $i++) {
-            $newGenre[$i] = new Genre();
-            $newGenre[$i]->setName($genreData[$i]);
+        // Les genres
+        // créer les genres et les stocker (dans un tableau)
+        // (on peut aller chercher les noms de genres dans le tableau)
 
-            $manager->persist($newGenre[$i]);
+        // Tableau vide pour nos genres
+        $genresList = [];
+
+        for ($i = 1; $i <= 5; $i++) {
+
+            // Nouveau genre
+            $genre = new Genre();
+            $genre->setName($oflixProvider->movieGenre());
+
+            // On l'ajoute à la liste pour usage ultérieur
+            // Patch pour éviter les doublons
+            $genresList[] = $genre;
+
+            // On persiste
+            $manager->persist($genre);
         }
 
         // Tableau pour nos persons
@@ -53,7 +64,7 @@ class AppFixtures extends Fixture
             $movie->setType($type);
             $movie->setSynopsis('Aenean blandit, tortor ac pellentesque luctus, arcu enim aliquam augue, ac malesuada est magna a elit. Integer venenatis lacus id elit lacinia tincidunt. Cras purus leo, faucibus dictum dictum id, convallis id neque. Pellentesque consequat lorem a lacus egestas tempor. Nunc rutrum, ipsum interdum ullamcorper porta, metus velit faucibus lorem, in ullamcorper ligula odio a ipsum. In scelerisque enim eget sem vehicula, eu aliquet neque accumsan. Curabitur sit amet eros ut dui congue tristique et nec erat. Pellentesque est lorem, eleifend ac feugiat sit amet, scelerisque ut odio. Cras vel lectus ante. Sed est elit, fermentum sit amet neque a, tincidunt gravida urna. Proin hendrerit ex at lorem cursus tincidunt. Nunc ultricies rhoncus iaculis.');
             //titre
-            $movie->setTitle($type .' #'.$m);
+            $movie->setTitle($oflixProvider->movieTitle());
             $movie->setSummary('Résumé de la '. $type .' #'.$m);
             $movie->setReleaseDate(new DateTimeImmutable('-' . mt_rand(1, 3000) . ' day'));
             // Entre 30 min et 263 minutes
@@ -81,16 +92,13 @@ class AppFixtures extends Fixture
                 }
             }
 
-            // Add genre
-            $tableauIndex = []; //tableau d'index 
-            for ($j = 0; $j < mt_rand(1, 6); $j++) {
-                //on choisit un nouvel index au hasard
-                $newIndex = mt_rand(0, count($genreData) - 1);
-                //s'il ne fait pas partie du tableau alors on peut ajouter le genre
-                if (!in_array($newIndex, $tableauIndex)) {
-                    $tableauIndex[] = $newIndex;
-                    $movie->addGenre($newGenre[$newIndex]);
-                }
+            // On ajoute de 1 à 3 genres au hasard pour chaque film
+            for ($g = 1; $g <= mt_rand(1, 3); $g++) {
+
+                // Un genre au hasard entre 0 et la longueur du tableau - 1
+                // on va chercher un index entre 0 et 19 (20 - 1)
+                $randomGenre = $genresList[mt_rand(0, count($genresList) - 1)];
+                $movie->addGenre($randomGenre);
             }
 
             //Add Casting
