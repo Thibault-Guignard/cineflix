@@ -22,7 +22,10 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');        
+        $faker = Faker\Factory::create('fr_FR');   
+        
+        //On peut fixer le '"seed" du générateur
+        $faker->seed(2022);
 
         // on instancie notre provider custom O'Flix
         $oflixProvider = new OflixProvider();
