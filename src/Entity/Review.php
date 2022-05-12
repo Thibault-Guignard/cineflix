@@ -52,11 +52,12 @@ class Review
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank
      */
     private $watchedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Movie::class)
+     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
      */
     private $movie;
 
@@ -130,7 +131,7 @@ class Review
         return $this->watchedAt;
     }
 
-    public function setWatchedAt(\DateTimeImmutable $watchedAt): self
+    public function setWatchedAt(?\DateTimeImmutable $watchedAt): self
     {
         $this->watchedAt = $watchedAt;
 
