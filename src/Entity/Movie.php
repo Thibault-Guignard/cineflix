@@ -40,7 +40,7 @@ class Movie
     private $seasons;
 
     /**
-     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie")
+     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", cascade={"remove"})
      * @ORM\OrderBy({"creditOrder"="ASC"})
      */
     private $castings;

@@ -2,10 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Genre;
 use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MovieType extends AbstractType
 {
@@ -13,14 +16,25 @@ class MovieType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('type',ChoiceType::class,[
+                'expanded' => true,
+                'choices' => [
+                    'Film' => 'Film',
+                    'Série' => 'Série'
+                ]
+            ])
             ->add('releaseDate')
             ->add('duration')
             ->add('summary')
             ->add('synopsis')
             ->add('poster')
-            ->add('rating')
-            ->add('type')
-            ->add('genres')
+
+            ->add('genres',EntityType::class,[
+                'class' => Genre::class,
+                'choice_label' => 'name',
+                'multiple' =>true,
+                'expanded' => true,
+            ])
         ;
     }
 
@@ -28,6 +42,9 @@ class MovieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Movie::class,
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ]);
     }
 }

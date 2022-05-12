@@ -3,7 +3,10 @@
 {% block title %}Movie{% endblock %}
 
 {% block body %}
-    <h1>Movie</h1>
+
+<div class="container">
+
+    <h1>Film : {{ movie.title }}</h1>
 
     <table class="table">
         <tbody>
@@ -17,7 +20,7 @@
             </tr>
             <tr>
                 <th>ReleaseDate</th>
-                <td>{{ movie.releaseDate ? movie.releaseDate|date('Y-m-d') : '' }}</td>
+                <td>{{ movie.releaseDate ? movie.releaseDate|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Duration</th>
@@ -33,7 +36,7 @@
             </tr>
             <tr>
                 <th>Poster</th>
-                <td>{{ movie.poster }}</td>
+                <td><img src="{{ movie.poster }}"></td>
             </tr>
             <tr>
                 <th>Rating</th>
@@ -46,9 +49,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_movie_index') }}">back to list</a>
+    <a href="{{ path('app_back_movie_index') }}" class="btn btn-primary">back to list</a>
 
-    <a href="{{ path('app_back_movie_edit', {'id': movie.id}) }}">edit</a>
+    <a href="{{ path('app_back_movie_edit', {'id': movie.id}) }}" class="btn btn-primary">edit</a>
 
     {{ include('back/movie/_delete_form.html.twig') }}
+</div>
+
 {% endblock %}

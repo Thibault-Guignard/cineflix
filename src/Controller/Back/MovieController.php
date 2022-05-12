@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * Ce est un préfixe de route pour les méthodes du controller
  * @Route("/back/movie")
  */
 class MovieController extends AbstractController
 {
     /**
-     * @Route("/", name="app_back_movie_index", methods={"GET"})
+     * @Route("", name="app_back_movie_index", methods={"GET"})
      */
     public function index(MovieRepository $movieRepository): Response
     {
