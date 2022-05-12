@@ -80,46 +80,6 @@ class MovieController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/movie/{id}/review", name="movie_review", methods={"GET", "POST"})
-     */
-    public function reviewMovie(Movie $movie,ManagerRegistry $doctrine,Request $request): Response
-    {
-        //on l'instance de 
-        $review = new Review();
 
-        // Création du formulaire d'ajout d'une critque
-
-        $form = $this->createForm(ReviewType::class,$review);
-
-        $form->handleRequest($request);
-
-        
-        //si form posté on le traire
-        if ($form->isSubmitted() && $form->isValid()) {
-        
-            //Le Formulaire a mis a jour l'entité post automatiquement
-
-            // On va faire appel au Manager de Doctrine
-            $entityManager = $doctrine->getManager();
-            // Prépare-toi à "persister" notre objet (req. INSERT INTO)
-            $entityManager->persist($review);
-
-            // On exécute les requêtes SQL
-            $entityManager->flush();
-
-            //dd($review);
-
-            // On redirige vers la liste
-            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
-
-        }
-
-        //on affiche le forme
-        return $this->renderForm('movie/review.html.twig',[
-            'form'  => $form,
-            'movie' => $movie,
-        ]);
-    }
 
 }
