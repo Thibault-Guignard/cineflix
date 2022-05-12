@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\API;
 
 use App\Model\Movies;
 use Symfony\Component\HttpFoundation\Response;

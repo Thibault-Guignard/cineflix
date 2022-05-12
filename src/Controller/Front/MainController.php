@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Movie;
 use App\Model\Movies;
@@ -31,7 +31,7 @@ class MainController extends AbstractController
 
         $moviesList = $movieRepository->findAllOrderedByRealaseDateDscDBL();
     
-        return $this->render('main/home.html.twig', [
+        return $this->render('front/main/home.html.twig', [
             'moviesList' => $moviesList,
         ]);
     }

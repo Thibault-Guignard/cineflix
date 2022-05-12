@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Movie;
 use App\Entity\Review;
@@ -35,7 +35,7 @@ class MovieController extends AbstractController
 
         $moviesList =$movieRepository->findAllOrderedByTitleASC();
 
-        return $this->render('movie/list.html.twig',[
+        return $this->render('front/movie/list.html.twig',[
             'moviesList' => $moviesList,
         ]);
     }
@@ -67,7 +67,7 @@ class MovieController extends AbstractController
             ['movie' => $movie]
         );
 
-        return $this->render('movie/show.html.twig', [
+        return $this->render('front/movie/show.html.twig', [
             'movie'         =>  $movie,
             'castingList'   =>  $castingList,
             'reviewsList'    =>  $reviewsList, 
@@ -83,7 +83,7 @@ class MovieController extends AbstractController
     public function search(): Response
     { 
     
-        return $this->render('movie/searching.html.twig', [
+        return $this->render('front/searching.html.twig', [
 
         ]);
     }

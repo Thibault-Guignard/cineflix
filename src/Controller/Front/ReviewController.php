@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Movie;
 use App\Entity\Review;
@@ -56,7 +56,7 @@ class ReviewController extends AbstractController
         }
 
         //on affiche le forme
-        return $this->renderForm('review/add.html.twig',[
+        return $this->renderForm('front/review/add.html.twig',[
             'form'  => $form,
             'movie' => $movie,
         ]);
