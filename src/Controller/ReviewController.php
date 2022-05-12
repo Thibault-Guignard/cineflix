@@ -37,8 +37,9 @@ class ReviewController extends AbstractController
         //si form posté on le traire
         if ($form->isSubmitted() && $form->isValid()) {
         
-            //Le Formulaire a mis a jour l'entité post automatiquement
-
+            //on associe le film a la review
+            $review->setMovie($movie);
+            //Le Formulaire a mis a jour l'entité Review automatiquement
             // On va faire appel au Manager de Doctrine
             $entityManager = $doctrine->getManager();
             // Prépare-toi à "persister" notre objet (req. INSERT INTO)
@@ -47,7 +48,7 @@ class ReviewController extends AbstractController
             // On exécute les requêtes SQL
             $entityManager->flush();
 
-            //dd($review);
+            
 
             // On redirige vers la liste
             return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);

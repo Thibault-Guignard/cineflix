@@ -40,11 +40,13 @@ class Review
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
      */
     private $rating;
 
     /**
      * @ORM\Column(type="json")
+     * @Assert\NotBlank
      */
     private $reactions = [];
 
