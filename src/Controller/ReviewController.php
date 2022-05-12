@@ -18,13 +18,19 @@ class ReviewController extends AbstractController
      */
     public function add(Movie $movie,ManagerRegistry $doctrine,Request $request): Response
     {
-        //on l'instance de 
+
+        // 404 ?
+        if ($movie === null) {
+            throw $this->createNotFoundException('Film non trouvé.');
+        }
+
+        //Entité Review 
         $review = new Review();
 
-        // Création du formulaire d'ajout d'une critque
-
+        // Création du formulaire d'ajout d'une critque Form et entité mappé dessus
         $form = $this->createForm(ReviewType::class,$review);
 
+        //Prise en charge de la requete par le form
         $form->handleRequest($request);
 
         

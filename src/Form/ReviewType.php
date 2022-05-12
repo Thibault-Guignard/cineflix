@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,13 +20,19 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username',TextType::class)
-            ->add('email',EmailType::class)
+            ->add('username',TextType::class,[
+                'label' => 'Pseudo'
+            ])
+            ->add('email',EmailType::class,[
+                'label' => 'E-mail'
+            ])
             ->add('content',TextareaType::class,[
                 'label' => 'Critique'
             ])
             ->add('rating',ChoiceType::class,[
-                'label'     => 'Avis', 
+                // pour faire disparaitre le label
+                'label'     =>  false ,
+                'placeholder' => 'Donnez votre avis', 
                 'choices'   => [
                     'Excellent'         =>  5,
                     'Très Bon'          =>  4,
@@ -39,19 +46,17 @@ class ReviewType extends AbstractType
                 'multiple'=>true,
                 'expanded'=>true,
                 'choices'=>[
-                    'Rire'      =>  'Rire',
-                    'Pleurer'   =>  'Pleurer',
-                    'Réfléchir' =>  'Reflechir',
-                    'Dormir'    =>  'Dormir',
-                    'Rêver'     =>  'Rever',
+                    'Rire'      =>  'smile',
+                    'Pleurer'   =>  'cry',
+                    'Réfléchir' =>  'think',
+                    'Dormir'    =>  'sleep',
+                    'Rêver'     =>  'dream',
                     ]
             ])
-            ->add('watchedAt',DateTimeType::class, [
-                'label' => "Vous avez vu le film le",
-                'widget' => 'single_text',
+            ->add('watchedAt',DateType::class, [
+                'label' => "Vous avez vu ce film le",
+                'widget' => 'single_text',            
                 'input' => 'datetime_immutable',
-                
-
             ])
             //->add('movie')
         ;
