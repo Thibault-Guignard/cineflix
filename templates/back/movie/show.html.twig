@@ -1,9 +1,7 @@
-{% extends 'back/back_template.html.twig' %}
-
-{% block title %}Film{% endblock %}
+{% extends 'back/movie/movie_template.html.twig' %}
 
 {% block bodyBack %}
-    <h1>Film : {{ movie.title }}</h1>
+    <h2>Film : {{ movie.title }}</h2>
 
     <table class="table">
         <tbody>
@@ -46,7 +44,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_movie_index') }}" class="btn btn-primary">Retour a liste des films</a>
+    <a href="{{ path('app_back_movie_index') }}" class="btn btn-primary">Retour a liste</a>
 
     <a href="{{ path('app_back_movie_edit', {'id': movie.id}) }}" class="btn btn-warning">Editer</a>
 

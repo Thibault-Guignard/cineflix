@@ -1,0 +1,11 @@
+{% extends 'back/casting/casting_template.html.twig' %}
+
+{% block bodyBack %}
+    <h2>Modifer le film</h2>
+
+    {{ include('back/casting/_form.html.twig', {'button_label': 'Mettre a jour'}) }}
+
+    {{ include('back/casting/_delete_form.html.twig') }}
+
+    <a href="{{ path('app_back_casting_index') }}" class="btn btn-primary">Retour a liste</a>
+{% endblock %}

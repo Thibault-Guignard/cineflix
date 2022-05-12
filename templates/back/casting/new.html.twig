@@ -1,0 +1,9 @@
+{% extends 'back/casting/casting_template.html.twig' %}
+
+{% block bodyBack %}
+    <h2>Ajouter un casting</h2>
+
+    {{ include('back/casting/_form.html.twig') }}
+
+    <a href="{{ path('app_back_casting_index') }}" class="btn btn-primary">Retour a liste des castings</a>
+{% endblock %}

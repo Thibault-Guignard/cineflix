@@ -97,4 +97,10 @@ class Person
 
         return $this;
     }
+
+    public function getName()
+    {
+        $nameComposed = $this->firstname . ' ' . $this->lastname;
+        return $nameComposed;
+    }
 }
