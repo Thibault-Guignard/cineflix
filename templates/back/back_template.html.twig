@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid">
+  <span class="navbar-text mr-2">
+    Back Office
+  </span>
+  <div>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Films, séries TV</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Casting</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Genre</a>
+        </li>
+    </ul>
+  </div>
+
+</nav>
+
+<div class="container">
+
+{% for label, messages in app.flashes %}
+
+  {% for message in messages %}
+
+    <div class="alert-{{ label }}">
+        {{ message }}
+    </div>
+  {% endfor %}
+
+{% endfor %}
+
+    {% block bodyBack %}{% endblock %}
+    
+</div>
+
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -21,6 +22,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=220)
+     * @Assert\NotBlank
      */
     private $title;
 
@@ -52,11 +54,14 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank
+     * @Assert\Length(max=500)
      */
     private $summary;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $synopsis;
 
@@ -72,6 +77,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=6)
+     * @Assert\NotBlank
      */
     private $type;
 

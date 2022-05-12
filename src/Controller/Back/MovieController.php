@@ -65,6 +65,10 @@ class MovieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash(
+                'success',
+                'Mise a jour effectué'
+            );
             $movieRepository->add($movie);
             return $this->redirectToRoute('app_back_movie_index', [], Response::HTTP_SEE_OTHER);
         }
