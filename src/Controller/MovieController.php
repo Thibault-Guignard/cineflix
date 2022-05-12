@@ -8,6 +8,7 @@ use App\Form\ReviewType;
 use Doctrine\ORM\Mapping\Id;
 use App\Repository\MovieRepository;
 use App\Repository\CastingRepository;
+use App\Repository\ReviewRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class MovieController extends AbstractController
      * @return Response
      * @Route("/movie/{id}" , name="movie_show" , methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show(Movie $movie, CastingRepository $castingRepository): Response
+    public function show(Movie $movie, CastingRepository $castingRepository,ReviewRepository $reviewRepository): Response
     {
         
         if ($movie === null) {
@@ -58,11 +59,18 @@ class MovieController extends AbstractController
             ['creditOrder' => 'ASC']
         ); */
 
+        // On va chercher notre casting via notre propre requetes
         $castingList = $castingRepository->findAllByMovieJoinedToPerson($movie);
 
+        //on va recupere les critiques du film
+        $reviewsList = $reviewRepository->findBy(
+            ['movie' => $movie]
+        );
+
         return $this->render('movie/show.html.twig', [
-            'movie' => $movie,
-            'castingList' => $castingList,
+            'movie'         =>  $movie,
+            'castingList'   =>  $castingList,
+            'reviewsList'    =>  $reviewsList, 
         ]);
     }
 
