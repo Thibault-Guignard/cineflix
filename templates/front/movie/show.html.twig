@@ -36,16 +36,8 @@
 
                     <p>{{movie.synopsis}}</p>
 
-                    <div class="d-flex mb-4" style="color: orange;">
-
-                        {% for star in 1..5  %}                
-                            <i class="bi bi-star{% if star <=  movie.rating  %}-fill        
-                                                {% elseif (star-movie.rating) < 0.5 %}-half
-                                                {% else %}  {% endif %}"></i>
-                        {% endfor %}
-
-                        <span class="ps-1">{{movie.rating}}</span>
-                    </div>
+                    {# Note et étoile pour le film donné #}
+                    {{ include('front/_rating_stars.html.twig') }}
 
                     {% if movie.seasons|length > 0 %}
                     <h2>{{movie.seasons|length}} Saison{{ movie.seasons.count() > 1 ? 's' }}</h2>

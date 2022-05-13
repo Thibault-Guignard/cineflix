@@ -1,0 +1,12 @@
+<div class="d-flex" style="color: orange;">
+
+    {% for star in 1..5  %}
+        {# Pour les etoiles on fait une boucle sur les 5 etoiles , si la note est superieure a l'etoile donnée 
+        on remplit l'etoile sinon si la valeur de la note est proche de la valeur de l'etoile on remplit a moitié
+        ici si la différence entre l'etoile et la note inferieure a 0.5 sinon on laisse vide #}                     
+        <i class="bi bi-star{% if star <=  movie.rating  %}-fill        
+                            {% elseif (star-movie.rating) <= 0.5 %}-half
+                            {% else %}  {% endif %}"></i>
+    {% endfor %}
+    <span class="ps-1">{{ movie.rating }}</span>
+</div>

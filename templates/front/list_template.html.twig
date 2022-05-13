@@ -48,18 +48,10 @@
                     <h3 class="mb-1">{{ movie.title }}</h3>
                     <div class="mb-1 text-muted">{{ movie.duration }} min</div>
                     <p><small>{{ movie.summary }}</small></p>
-                    <div class="d-flex" style="color: orange;">
 
-                        {% for star in 1..5  %}
-                            {# Pour les etoiles on fait une boucle sur les 5 etoiles , si la note est superieure a l'etoile donnée 
-                            on remplit l'etoile sinon si la valeur de la note est proche de la valeur de l'etoile on remplit a moitié
-                            ici si la différence entre l'etoile et la note inferieure a 0.5 sinon on laisse vide #}                     
-                            <i class="bi bi-star{% if star <=  movie.rating  %}-fill        
-                                                {% elseif (star-movie.rating) < 0.5 %}-half
-                                                {% else %}  {% endif %}"></i>
-                        {% endfor %}
-                        <span class="ps-1">{{ movie.rating }}</span>
-                    </div>
+                    {# Note et étoile pour le film donné #}
+                    {{ include('front/_rating_stars.html.twig') }}
+
                     <a href="{{ path('movie_show',{id:movie.id}) }}" class="fs-1 mt-3 text-danger align-self-start">
                         <i class="bi bi-arrow-right-square"></i>
                     </a>
