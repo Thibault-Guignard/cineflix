@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CastingController extends AbstractController
 {
     /**
-     * @Route("", name="app_back_casting_index", methods={"GET"})
+     * @Route("", name="back_casting_index", methods={"GET"})
      */
     public function index(CastingRepository $castingRepository): Response
     {
@@ -30,7 +30,7 @@ class CastingController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_back_casting_new", methods={"GET", "POST"})
+     * @Route("/new", name="back_casting_new", methods={"GET", "POST"})
      */
     public function new(Request $request, CastingRepository $castingRepository): Response
     {
@@ -40,7 +40,7 @@ class CastingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $castingRepository->add($casting);
-            return $this->redirectToRoute('app_back_casting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/casting/new.html.twig', [
@@ -50,7 +50,7 @@ class CastingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_back_casting_show", methods={"GET"})
+     * @Route("/{id}", name="back_casting_show", methods={"GET"})
      */
     public function show(Casting $casting): Response
     {
@@ -60,7 +60,7 @@ class CastingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_back_casting_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="back_casting_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Casting $casting, CastingRepository $castingRepository): Response
     {
@@ -74,7 +74,7 @@ class CastingController extends AbstractController
                 'success',
                 'Mise a jour effectué'
             );
-            return $this->redirectToRoute('app_back_casting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/casting/edit.html.twig', [
@@ -84,7 +84,7 @@ class CastingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_back_casting_delete", methods={"POST"})
+     * @Route("/{id}", name="back_casting_delete", methods={"POST"})
      */
     public function delete(Request $request, Casting $casting, CastingRepository $castingRepository): Response
     {
@@ -97,6 +97,6 @@ class CastingController extends AbstractController
 
         }
 
-        return $this->redirectToRoute('app_back_casting_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
     }
 }
