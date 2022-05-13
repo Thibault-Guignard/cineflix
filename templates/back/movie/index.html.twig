@@ -30,6 +30,9 @@
                 <td>
                     <a class="btn btn-primary" href="{{ path('back_movie_show', {'id': movie.id}) }}">Voire</a>
                     <a class="btn btn-warning"href="{{ path('back_movie_edit', {'id': movie.id}) }}">Editer</a>
+                    {% if movie.type == 'Série' %}
+                        <a class="btn btn-success"href="{{ path('back_season_index', {'id': movie.id}) }}">Saison</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
