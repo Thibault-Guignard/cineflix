@@ -35,8 +35,8 @@ class MovieType extends AbstractType
             ->add('releaseDate',DateType::class,[
                 'label' => 'Date de sortie ou de première diffusion :',
                 'format' => 'ddMMMMyyyy',
-                'years' => range('1895', date('Y')+2),
-                'data' => new \DateTime("now"),
+                'years' => range('1895', date('Y')+5),
+                
             ])
             ->add('duration',IntegerType::class,[
                 'label' => 'Durée',
@@ -44,7 +44,7 @@ class MovieType extends AbstractType
             ])
             ->add('summary',TextareaType::class,[
                 'label' => 'Résumé',
-                'help' => 'Maximun 500 charactères'
+                'help' => 'Minimun 100 caractères ,maximun 500 charactères'
             ])
             ->add('synopsis',TextareaType::class,[
                 'label' => 'Synopsis',
@@ -54,6 +54,7 @@ class MovieType extends AbstractType
             ])
 
             ->add('genres',EntityType::class,[
+                'help' => 'Sélectionnez au moin un genre',
                 'class' => Genre::class,
                 'choice_label' => 'name',
                 'multiple' =>true,

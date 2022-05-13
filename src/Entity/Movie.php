@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,8 @@ class Movie
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\LessThan(1700)
+     * @Assert\GreaterThan(0)
      */
     private $duration;
 
@@ -49,13 +52,15 @@ class Movie
 
     /**
      * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+     * 
+     * @Assert\Count(min=1 , minMessage="Vous devez sélectionner au moins 1 genre.")
      */
     private $genres;
 
     /**
      * @ORM\Column(type="string", length=500)
      * @Assert\NotBlank
-     * @Assert\Length(max=500)
+     * @Assert\Length(min=100,max=500)
      */
     private $summary;
 
@@ -67,6 +72,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=2003)
+     * @Assert\Url
      */
     private $poster;
 
@@ -94,6 +100,7 @@ class Movie
         $this->castings = new ArrayCollection();
         $this->genres = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->releaseDate = new DateTimeImmutable();
     }
 
     public function getId(): ?int
