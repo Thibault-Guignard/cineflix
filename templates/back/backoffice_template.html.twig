@@ -28,16 +28,7 @@
 
 <h1>{% block subtitle_backoffice %}{% endblock %}</h1>
 
-{% for label, messages in app.flashes %}
-
-  {% for message in messages %}
-
-    <div class="card alert-{{ label }}" style="width: 10rem;">
-        {{ message }}
-    </div>
-  {% endfor %}
-
-{% endfor %}
+    {% include "_flash_messages.html.twig" %}
 
     {% block bodyBack %}{% endblock %}
     
