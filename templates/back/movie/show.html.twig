@@ -1,7 +1,12 @@
 {% extends 'back/movie/movie_template.html.twig' %}
 
 {% block bodyBack %}
-    <h2>Film : {{ movie.title }}</h2>
+    <h2>{{ movie.type }} : {{ movie.title }}</h2>
+
+    <a class="btn btn-success"href="{{ path('back_casting_index', {'id': movie.id}) }}">Casting</a>
+    {% if movie.type == 'Série' %}
+        <a class="btn btn-success"href="{{ path('back_season_index', {'id': movie.id}) }}">Saison</a>
+    {% endif %}
 
     <table class="table">
         <tbody>

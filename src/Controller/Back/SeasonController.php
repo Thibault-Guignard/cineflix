@@ -37,12 +37,14 @@ class SeasonController extends AbstractController
     public function new(Movie $movie,Request $request, SeasonRepository $seasonRepository): Response
     {
         $season = new Season();
+
+        //on associe le film a la saison
+        $season->setMovie($movie);
+        
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //on associe le film a la saison
-            $season->setMovie($movie);
             $seasonRepository->add($season);
             $this->addFlash('success','Film ajouté');
             return $this->redirectToRoute('back_season_index', ['id' => $movie->getId()], Response::HTTP_SEE_OTHER);

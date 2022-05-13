@@ -2,12 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Movie;
 use App\Entity\Season;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SeasonType extends AbstractType
@@ -17,8 +15,7 @@ class SeasonType extends AbstractType
         $builder
                 ->add('number')
                 ->add('episodesNumber')
-
-        ; 
+                ; 
     }
 
     public function configureOptions(OptionsResolver $resolver): void
