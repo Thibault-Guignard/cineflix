@@ -1,7 +1,7 @@
 {% extends 'back/casting/casting_template.html.twig' %}
 
 {% block bodyBack %}
-    <h2>Casting</h2>
+    <h2>Un membre du casting</h2>
 
     <table class="table">
         <tbody>
@@ -21,14 +21,11 @@
                 <th>Crédit</th>
                 <td>{{ casting.creditOrder }}</td>
             </tr>
-            <tr>
-                <th>Film</th>
-                <td>{{ casting.movie.title }}</td>
-            </tr>
+
         </tbody>
     </table>
 
-    <a href="{{ path('back_casting_index') }}" class="btn btn-primary">Retour a liste des castings</a>
+    <a href="{{ path('back_casting_index',{id: casting.movie.id}) }}" class="btn btn-primary">Retour a liste des castings</a>
 
     <a href="{{ path('back_casting_edit', {'id': casting.id}) }}" class="btn btn-warning">Editer</a>
 

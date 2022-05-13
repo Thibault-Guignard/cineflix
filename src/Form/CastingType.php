@@ -33,13 +33,6 @@ class CastingType extends AbstractType
             ->add('role',TextType::class,[
                 'label' => 'Son rôle'
             ])
-            ->add('movie',EntityType::class,[
-                'label' => false,
-                'placeholder' => 'Sélectionnez un film',
-                'class' => Movie::class,
-                'choice_label' => 'title',
-                
-            ])
         ;
     }
 

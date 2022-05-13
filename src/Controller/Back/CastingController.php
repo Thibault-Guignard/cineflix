@@ -2,6 +2,7 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Movie;
 use App\Entity\Casting;
 use App\Form\CastingType;
 use App\Repository\CastingRepository;
@@ -17,35 +18,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CastingController extends AbstractController
 {
     /**
-     * @Route("", name="back_casting_index", methods={"GET"})
+     * @Route("/movie/{id}", name="back_casting_index", methods={"GET"})
      */
-    public function index(CastingRepository $castingRepository): Response
+    public function index(Movie $movie ,CastingRepository $castingRepository): Response
     {
         return $this->render('back/casting/index.html.twig', [
             'castings' => $castingRepository->findBy(
-                [],
-                ['movie' => 'ASC','creditOrder' => 'ASC']
+                ['movie' => $movie],
+                ['creditOrder' => 'ASC']
             ),
+            'movie' => $movie,
         ]);
     }
 
     /**
-     * @Route("/new", name="back_casting_new", methods={"GET", "POST"})
+     * @Route("/new/movie /{id}", name="back_casting_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CastingRepository $castingRepository): Response
+    public function new(Movie $movie, Request $request, CastingRepository $castingRepository): Response
     {
         $casting = new Casting();
         $form = $this->createForm(CastingType::class, $casting);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $casting->setMovie($movie);
             $castingRepository->add($casting);
-            return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_casting_index', ['id' => $movie->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/casting/new.html.twig', [
             'casting' => $casting,
             'form' => $form,
+            'movie' => $movie,
         ]);
     }
 
@@ -74,7 +78,7 @@ class CastingController extends AbstractController
                 'success',
                 'Mise a jour effectué'
             );
-            return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_casting_index', ['id' => $casting->getMovie()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/casting/edit.html.twig', [
@@ -97,6 +101,6 @@ class CastingController extends AbstractController
 
         }
 
-        return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_casting_index', ['id' => $casting->getMovie()->getId()], Response::HTTP_SEE_OTHER);
     }
 }
