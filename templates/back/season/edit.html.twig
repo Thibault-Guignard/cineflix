@@ -1,0 +1,11 @@
+{% extends 'back/season/season_template.html.twig' %}
+
+{% block bodyBack %}
+    <h2>Modifer la saison</h2>
+
+    {{ include('back/season/_form.html.twig', {'button_label': 'Mettre a jour'}) }}
+
+    {{ include('back/season/_delete_form.html.twig') }}
+
+    <a href="{{ path('back_season_index') }}" class="btn btn-primary">Retour a liste</a>
+{% endblock %}

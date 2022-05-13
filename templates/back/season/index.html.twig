@@ -1,0 +1,38 @@
+{% extends 'back/season/season_template.html.twig' %} 
+
+{% block bodyBack %}
+
+    <h2>Seasons</h2>
+        <a href="{{ path('back_season_new') }}" class="btn btn-primary me-2">Ajouter un season</a>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Série</th>
+                <th>Numéro de sasion</th>
+                <th>Episodes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for season in seasons %}
+            <tr>
+                <td>{{ season.id }}</td>
+                <td>{{ season.movie.title }}</td>
+                <td>{{ season.number}}</td>
+                <td>{{ season.episodesNumber }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('back_season_show', {'id': season.id}) }}">Voire</a>
+                    <a class="btn btn-warning"href="{{ path('back_season_edit', {'id': season.id}) }}">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
