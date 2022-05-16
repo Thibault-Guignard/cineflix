@@ -11,7 +11,7 @@ use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Season;
 use App\Entity\Casting;
-
+use App\Entity\User;
 use DateTimeImmutable;
 
 use Doctrine\Persistence\ObjectManager;
@@ -31,6 +31,30 @@ class AppFixtures extends Fixture
         $oflixProvider = new OflixProvider();
         //on ajoute notre provider a Faker
         $faker->addProvider($oflixProvider);
+
+        //Les Users
+
+        $user = new User();
+        $user->setEmail('user@user.com');
+        $user->setPassword('$2y$13$7AehhdLiSc3K45si3qSWKOnDcHjVMXKEeU/1VY1UuH3f107HqQTcu');
+        $user->setRoles(["ROLE_USER"]);
+
+        $manager->persist($user);
+
+
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        $admin->setPassword('$2y$13$13BjyyNulro6TW1IggjKL.86Ee9oTQdqAYcr8xKbe1XOWop.vzF1W');
+        $admin->setRoles(["ROLE_ADMIN"]);
+
+        $manager->persist($admin);
+
+        $managerUser = new User();
+        $managerUser->setEmail('manager@manager.com');
+        $managerUser->setPassword('$2y$13$lMAexC8lNOxlutKL53Sbc..1kyUQpJCqXqM4atjzyE23YqN2fa6Yq');
+        $managerUser->setRoles(["ROLE_MANAGER"]);
+
+        $manager->persist($managerUser);
 
         // Les genres
         // créer les genres et les stocker (dans un tableau)
