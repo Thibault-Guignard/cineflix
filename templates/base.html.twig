@@ -51,25 +51,36 @@
                         <a class="nav-link" href="./favorites.html"><i class="bi bi-bookmark"></i> Ma liste</a>
                     </li>
                 </ul>
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
+                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            <span>Charles</span>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <span>{{ app.user.email }} / {{ app.user.roles[0]|replace({'ROLE_':''}) }}</span>
                             <i class="bi bi-person-square"></i>
+                            {% else %}
+                            <span>Visiteur</span> 
+                            {% endif %}
                         </a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ path('back_movie_index') }}">Backoffice</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                            {% if (app.user.roles[0] == 'ROLE_MANAGER') or  (app.user.roles[0] == 'ROLE_ADMIN')  %}
+                                 <li><a class="dropdown-item" href="{{ path('back_movie_index') }}">Backoffice</a></li>                                 
+                            {% endif %}                         
+  
                         </ul>
+                        {% endif %} 
                     </li>
                 </ul>
 
-                <button type="button" class="btn btn-danger me-2">Connexion</button>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="btn btn-danger me-2" href="{{ path('logout') }}">Déconnexion</a></li>
+                {% else %}
+                <a class="btn btn-danger me-2" href="{{ path('login') }}">Connexion</a></li>
+                {% endif %}
 
                 <form class="d-flex" action="list.html">
                     <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">
