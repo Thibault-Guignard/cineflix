@@ -45,14 +45,14 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setEmail('admin@admin.com');
         $admin->setPassword('$2y$13$13BjyyNulro6TW1IggjKL.86Ee9oTQdqAYcr8xKbe1XOWop.vzF1W');
-        $admin->setRoles(["ROLE_ADMIN"]);
+        $admin->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($admin);
 
         $managerUser = new User();
         $managerUser->setEmail('manager@manager.com');
         $managerUser->setPassword('$2y$13$lMAexC8lNOxlutKL53Sbc..1kyUQpJCqXqM4atjzyE23YqN2fa6Yq');
-        $managerUser->setRoles(["ROLE_MANAGER"]);
+        $managerUser->setRoles(['ROLE_MANAGER']);
 
         $manager->persist($managerUser);
 

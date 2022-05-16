@@ -41,8 +41,11 @@ security:
         - { path: ^/movie/(list|\d+)$, roles: PUBLIC_ACCESS }
         - { path: ^/movie/, roles: [ROLE_USER]}
         - { path: ^/back, roles: [ROLE_MANAGER], methods: [GET]}
-        - { path: ^/back, roles: [ROLE_ADMIN] }
+        - { path: ^/back, roles: [ROLE_ADMIN]}
         # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_MANAGER:   ROLE_USER
+        ROLE_ADMIN:     ROLE_MANAGER
 
 when@test:
     security:
@@ -56,3 +59,5 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+            
