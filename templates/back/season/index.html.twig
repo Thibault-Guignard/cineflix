@@ -1,6 +1,6 @@
 {% extends 'back/season/season_template.html.twig' %} 
 
-{% block bodyBack %}
+{% block body_back %}
 
     <h2>Liste des saisons de la série : {{ movie.title }}</h2>
         <a href="{{ path('back_season_new' , {id: movie.id}) }}" class="btn btn-primary me-2">Ajouter un season</a>

@@ -1,9 +1,9 @@
 {% extends 'back/user/user_template.html.twig' %}
 
-{% block body %}
+{% block body_back %}
     <h2>Modifier l'utilisateur</h2>
 
-    {{ include('back/user/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('back/user/_form.html.twig', {'button_label': 'Mettre a jour'}) }}
 
     <a href="{{ path('back_user_index') }}" class="btn btn-primary">Retour à la liste</a>
 

@@ -1,6 +1,6 @@
 {% extends 'back/movie/movie_template.html.twig' %}
 
-{% block bodyBack %}
+{% block body_back %}
     <h2>{{ movie.type }} : {{ movie.title }}</h2>
 
     <a class="btn btn-success"href="{{ path('back_casting_index', {'id': movie.id}) }}">Casting</a>
