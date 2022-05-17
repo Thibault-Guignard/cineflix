@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
@@ -19,22 +20,30 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class,[
-                'label' => 'Adresse Email :',
+                'label' =>  'Adresse Email :',
             ])
             ->add('password',PasswordType::class,[
-                'label' => 'Mot de passe',
-                'constraints' => new NotBlank(),
+                'label'         =>  'Mot de passe',
+                'help'          =>  'Au moins 8 caractères,
+                                    au moins une minuscule
+                                    au moins une majuscule
+                                    au moins un chiffre
+                                    au moins un caractère spécial parmi _, -, |, %, &, *, =, @, $',
+                'constraints'   =>  [
+                    new NotBlank(),
+                    new Regex("^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*['_', '-', '|', '%', '&', '*', '=', '@', '$']).{8,}$")
+                ]
             ])
             ->add('roles',ChoiceType::class,[
-                'label' => 'Quels role ?',
-                'choices' => [
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Manager' => 'ROLE_MANAGER',
-                    'Utilisateur' => 'ROLE_USER',
+                'label'     => 'Quels role ?',
+                'choices'   => [
+                    'Administrateur'    =>  'ROLE_ADMIN',
+                    'Manager'           =>  'ROLE_MANAGER',
+                    'Utilisateur'       =>  'ROLE_USER',
                 ],
-                'multiple' => false,
-                'expanded' => true,
-                'help' => 'Un seul choix possible'
+                'multiple'  => false,
+                'expanded'  => true,
+                'help'      => 'Un seul choix possible'
 
             ])
 
