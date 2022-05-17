@@ -52,34 +52,38 @@
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <span>{{ app.user.email }} / {{ app.user.roles[0]|replace({'ROLE_':''}) }}</span>
-                            <i class="bi bi-person-square"></i>
-                            {% else %}
-                            <span>Visiteur</span> 
-                            {% endif %}
-                        </a>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profil</a></li>
-                            {% if (app.user.roles[0] == 'ROLE_MANAGER') or  (app.user.roles[0] == 'ROLE_ADMIN')  %}
-                                 <li><a class="dropdown-item" href="{{ path('back_movie_index') }}">Backoffice</a></li>                                 
-                            {% endif %}                         
-  
-                        </ul>
-                        {% endif %} 
-                    </li>
-                </ul>
-
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a class="btn btn-danger me-2" href="{{ path('logout') }}">Déconnexion</a></li>
+                {# User connecté #}
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">                            
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                <span>{{ app.user.email }}</span>
+                                <i class="bi bi-person-square"></i>                       
+                            </a>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <ul class="dropdown-menu">
+                                    {# Affichage du role #}
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <li><h6 class="dropdown-header">Administrateur</h6></li>
+                                    {% elseif is_granted('ROLE_MANAGER') %}
+                                        <li><h6 class="dropdown-header">Manager</h6></li>
+                                    {% elseif is_granted('ROLE_USER') %}
+                                        <li><h6 class="dropdown-header">Membre</h6></li>
+                                    {% endif %}
+                                    <li><a class="dropdown-item" href="#">Profil</a></li>
+                                    {# Affichage du lien vers le back si admin ou manager #}
+                                    {% if (is_granted('ROLE_MANAGER')) %}
+                                        <li><a class="dropdown-item" href="{{ path('back_movie_index') }}">Backoffice</a></li>                                 
+                                    {% endif %}                         
+                                </ul>
+                            {% endif %} 
+                        </li>
+                    </ul>
+                    <a class="btn btn-danger me-2" href="{{ path('logout') }}">Déconnexion</a></li>
                 {% else %}
-                <a class="btn btn-danger me-2" href="{{ path('login') }}">Connexion</a></li>
+                {# User non connecté #}
+                    <a class="btn btn-danger me-2" href="{{ path('login') }}">Connexion</a></li>
                 {% endif %}
 
                 <form class="d-flex" action="list.html">
