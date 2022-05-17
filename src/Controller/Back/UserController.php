@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +37,11 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plaintextPassword = $user->getPassword();
 
+            //on doit hacher le mot de passe
+            $plaintextPassword = $user->getPassword();
             $hashedPassword = $passwordHasher->hashPassword($user,$plaintextPassword);
+
             $user->setPassword($hashedPassword);
 
             $userRepository->add($user);
@@ -65,12 +68,22 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //si mot de passe présent , on hashe
+            $passwordInForm = $form->get('password')->getData();
+            if ($passwordInForm) {
+                //on doit hacher le mot de passe
+                $hashedPassword = $passwordHasher->hashPassword($user,$$passwordInForm);
+
+                $user->setPassword($hashedPassword);
+            }
+
             $userRepository->add($user);
             $this->addFlash('success','Mise a jour effectué');
             return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);

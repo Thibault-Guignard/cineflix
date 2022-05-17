@@ -31,15 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Assert\NotBlank
-     * @Assert\Count(min=1 ,max=1 , exactMessage="Vous devez choisir 1 rôle.") 
+     * @Assert\Choice({"ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"},multiple=true)
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank
      */
     private $password;
 
