@@ -32,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="json")
      * @Assert\NotBlank
-     * 
+     * @Assert\Count(min=1 ,max=1 , exactMessage="Vous devez choisir 1 rôle.") 
      */
     private $roles = [];
 

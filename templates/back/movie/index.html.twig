@@ -29,7 +29,7 @@
                 <td>{{ movie.type }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('back_movie_show', {'id': movie.id}) }}">Voire</a>
-                    <a class="btn btn-warning"href="{{ path('back_movie_edit', {'id': movie.id}) }}">Editer</a>
+                    <a class="btn btn-warning" href="{{ path('back_movie_edit', {'id': movie.id}) }}">Editer</a>
                     <a class="btn btn-success"href="{{ path('back_casting_index', {'id': movie.id}) }}">Casting</a>
                     {% if movie.type == 'Série' %}
                         <a class="btn btn-success"href="{{ path('back_season_index', {'id': movie.id}) }}">Saison</a>

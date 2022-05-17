@@ -33,27 +33,26 @@ class AppFixtures extends Fixture
         $faker->addProvider($oflixProvider);
 
         //Les Users
-
+        //User Classique
         $user = new User();
         $user->setEmail('user@user.com');
         $user->setPassword('$2y$13$7AehhdLiSc3K45si3qSWKOnDcHjVMXKEeU/1VY1UuH3f107HqQTcu');
-        $user->setRoles(["ROLE_USER"]);
+        $user->setRoles(["ROLE_USER"]);   
 
-        $manager->persist($user);
-
-
+        //User Admin
         $admin = new User();
         $admin->setEmail('admin@admin.com');
         $admin->setPassword('$2y$13$13BjyyNulro6TW1IggjKL.86Ee9oTQdqAYcr8xKbe1XOWop.vzF1W');
-        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setRoles(['ROLE_ADMIN']);        
 
-        $manager->persist($admin);
-
+        //User Manager
         $managerUser = new User();
         $managerUser->setEmail('manager@manager.com');
         $managerUser->setPassword('$2y$13$lMAexC8lNOxlutKL53Sbc..1kyUQpJCqXqM4atjzyE23YqN2fa6Yq');
         $managerUser->setRoles(['ROLE_MANAGER']);
 
+        $manager->persist($admin);
+        $manager->persist($user);
         $manager->persist($managerUser);
 
         // Les genres
