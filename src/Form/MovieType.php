@@ -23,47 +23,47 @@ class MovieType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,[
-                'label' => 'Titre :'
+                'label' =>  'Titre :'
             ])
             ->add('type',ChoiceType::class,[
-                'label' => 'Est ce un film ou une série ?',
-                'expanded' => true,
-                'choices' => [
-                    'Film' => 'Film',
-                    'Série' => 'Série'
+                'label'     =>  'Est ce un film ou une série ?',
+                'expanded'  =>  true,
+                'choices'   =>  [
+                    'Film'  =>  'Film',
+                    'Série' =>  'Série'
                 ]
             ])
             ->add('releaseDate',DateType::class,[
-                'label' => 'Date de sortie ou de première diffusion :',
-                'format' => 'ddMMMMyyyy',
-                'years' => range('1895', date('Y')+5),
+                'label'     =>  'Date de sortie ou de première diffusion :',
+                'format'    =>  'ddMMMMyyyy',
+                'years'     =>  range('1895', date('Y')+5),
                 
             ])
             ->add('duration',IntegerType::class,[
-                'label' => 'Durée',
-                'help' => 'Durée en minute'
+                'label' =>  'Durée',
+                'help'  =>  'Durée en minute'
             ])
             ->add('summary',TextareaType::class,[
-                'label' => 'Résumé',
-                'help' => 'Minimun 100 caractères ,maximun 500 charactères'
+                'label' =>  'Résumé',
+                'help'  =>  'Minimun 100 caractères ,maximun 500 charactères'
             ])
             ->add('synopsis',TextareaType::class,[
-                'label' => 'Synopsis',
+                'label' =>  'Synopsis',
             ])
             ->add('poster',UrlType::class,[
-                'label' => 'Affiche'
+                'label' =>  'Affiche'
             ])
 
             ->add('genres',EntityType::class,[
-                'class' => Genre::class,
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
+                'class'         =>  Genre::class,
+                'choice_label'  =>  'name',
+                'query_builder' =>  function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
+                            ->orderBy('u.name', 'ASC');
                 },
-                'help' => 'Sélectionnez au moin un genre',
-                'multiple' =>true,
-                'expanded' => true,
+                'help'          =>  'Sélectionnez au moin un genre',
+                'multiple'      =>  true,
+                'expanded'      =>  true,
             ])
         ;
     }
@@ -71,8 +71,8 @@ class MovieType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Movie::class,
-            'attr' => [
+            'data_class'    =>  Movie::class,
+            'attr'          => [
                 'novalidate' => 'novalidate',
             ],
         ]);

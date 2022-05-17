@@ -21,19 +21,19 @@ class ReviewType extends AbstractType
     {
         $builder
             ->add('username',TextType::class,[
-                'label' => 'Pseudo'
+                'label' =>  'Pseudo'
             ])
             ->add('email',EmailType::class,[
-                'label' => 'E-mail'
+                'label' =>  'E-mail'
             ])
             ->add('content',TextareaType::class,[
-                'label' => 'Critique'
+                'label' =>  'Critique'
             ])
             ->add('rating',ChoiceType::class,[
                 // pour faire disparaitre le label
-                'label'     =>  false ,
-                'placeholder' => 'Donnez votre avis', 
-                'choices'   => [
+                'label'         =>  false ,
+                'placeholder'   =>  'Donnez votre avis', 
+                'choices'       =>  [
                     'Excellent'         =>  5,
                     'Très Bon'          =>  4,
                     'Bon'               =>  3,
@@ -43,9 +43,9 @@ class ReviewType extends AbstractType
             ])
             ->add('reactions',ChoiceType::class,[
                 'label'     =>  'Ce film vous a fait :',
-                'multiple'=>true,
-                'expanded'=>true,
-                'choices'=>[
+                'multiple'  =>  true,
+                'expanded'  =>  true,
+                'choices'   =>  [
                     'Rire'      =>  'smile',
                     'Pleurer'   =>  'cry',
                     'Réfléchir' =>  'think',
@@ -54,9 +54,9 @@ class ReviewType extends AbstractType
                     ]
             ])
             ->add('watchedAt',DateType::class, [
-                'label' => "Vous avez vu ce film le",
-                'widget' => 'single_text',            
-                'input' => 'datetime_immutable',
+                'label'     =>  "Vous avez vu ce film le",
+                'widget'    =>  'single_text',            
+                'input'     =>  'datetime_immutable',
             ])
 
             //->add('movie')
@@ -66,7 +66,7 @@ class ReviewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Review::class,
+            'data_class'    =>  Review::class,
         ]);
     }
 }

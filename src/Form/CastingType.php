@@ -20,18 +20,18 @@ class CastingType extends AbstractType
     {
         $builder
             ->add('person',EntityType::class,[
-                'label' => false,
-                'placeholder' => 'Sélectionnez un acteur',
-                'class' => Person::class,
-                'choice_label' => function($person) {
+                'label'         =>  false,
+                'placeholder'   =>  'Sélectionnez un acteur',
+                'class'         =>  Person::class,
+                'choice_label'  =>  function($person) {
                     return $person->getName();
                 }
             ])
             ->add('creditOrder',IntegerType::class,[
-                'label' => "Ordre crédit"
+                'label' =>  "Ordre crédit"
             ])
             ->add('role',TextType::class,[
-                'label' => 'Son rôle'
+                'label' =>  'Son rôle'
             ])
         ;
     }
@@ -39,9 +39,9 @@ class CastingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Casting::class,
-            'attr' => [
-                'novalidate' => 'novalidate',
+            'data_class'        =>  Casting::class,
+            'attr'  =>  [
+                'novalidate'    =>  'novalidate',
             ],
         ]);
     }
