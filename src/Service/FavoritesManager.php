@@ -15,9 +15,10 @@ class FavoritesManager
      */
     private $session;
 
-    function __construct(RequestStack $requestStack) {
+    function __construct(RequestStack $requestStack, $emptyEnabled) {
 
         $this->session = $requestStack->getSession();
+        $this->emptyEnabled = $emptyEnabled;
     }
 
     /**
