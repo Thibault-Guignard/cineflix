@@ -92,6 +92,11 @@ class Movie
      */
     private $reviews;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titleSlug;
+
 
 
     public function __construct()
@@ -314,6 +319,18 @@ class Movie
                 $review->setMovie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitleSlug(): ?string
+    {
+        return $this->titleSlug;
+    }
+
+    public function setTitleSlug(string $titleSlug): self
+    {
+        $this->titleSlug = $titleSlug;
 
         return $this;
     }

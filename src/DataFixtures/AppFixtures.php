@@ -16,11 +16,17 @@ use DateTimeImmutable;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager): void
+
+    public function __construct(SluggerInterface $sluggerInterface) {
+        $this->sluggerInterface = $sluggerInterface;
+    }
+
+    public function load(ObjectManager $manager ): void
     {
         $faker = Faker\Factory::create('fr_FR');   
         
@@ -94,6 +100,8 @@ class AppFixtures extends Fixture
             $movie = new Movie();
             //titre
             $movie->setTitle($faker->unique()->movieTitle());
+            //titre slug
+            $movie->setTitleSlug($this->sluggerInterface->slug($movie->getTitle()));
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
             //Description page liste et page show
@@ -166,4 +174,5 @@ class AppFixtures extends Fixture
 
         $manager->flush();
     }
+
 }
