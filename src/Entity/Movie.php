@@ -95,7 +95,7 @@ class Movie
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titleSlug;
+    private $slug;
 
 
 
@@ -323,14 +323,14 @@ class Movie
         return $this;
     }
 
-    public function getTitleSlug(): ?string
+    public function getSlug(): ?string
     {
-        return $this->titleSlug;
+        return $this->slug;
     }
 
-    public function setTitleSlug(string $titleSlug): self
+    public function setSlug(string $slug): self
     {
-        $this->titleSlug = $titleSlug;
+        $this->slug = $slug;
 
         return $this;
     }

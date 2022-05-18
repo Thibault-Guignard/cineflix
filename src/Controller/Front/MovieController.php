@@ -41,15 +41,18 @@ class MovieController extends AbstractController
     }
 
     /**
-     * Display one movie with this {id}
+     * Display one movie with this {slug}
      *
-     * @param $id
+     * @param $slug
      * @return Response
-     * @Route("/movie/{id}" , name="movie_show" , methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/movie/{slug}" , name="movie_show" , methods={"GET"})
      */
-    public function show(Movie $movie, CastingRepository $castingRepository,ReviewRepository $reviewRepository): Response
+    public function show($slug, MovieRepository $movieRepository, CastingRepository $castingRepository,ReviewRepository $reviewRepository): Response
     {
-        
+        $movie = $movieRepository->findOneBy([
+            'slug' => $slug
+            ]);
+
         if ($movie === null) {
             throw $this->createNotFoundException('Le film ou la série n\'existe pas');
         }

@@ -99,9 +99,10 @@ class AppFixtures extends Fixture
         for ($m = 1; $m <= 10; $m++) {             
             $movie = new Movie();
             //titre
+
             $movie->setTitle($faker->unique()->movieTitle());
             //titre slug
-            $movie->setTitleSlug($this->sluggerInterface->slug($movie->getTitle()));
+            $movie->setSlug($this->sluggerInterface->slug($movie->getTitle()));
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
             //Description page liste et page show
