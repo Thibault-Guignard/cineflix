@@ -107,12 +107,24 @@ class MainController extends AbstractController
      */
     public function deleteFavorites(FavoritesManager $favoritesManager):Response
     {
-        $favoritesManager->empty();
+        // Vide la liste
+        $success = $favoritesManager->empty();
 
-        $this->addFlash(
-            'success',
-            'Liste des favoris vidée.'
-        );
+        if ($success) {
+
+            $this->addFlash(
+                'success',
+                'Liste de favoris vidée.'
+            );
+
+        } else {
+
+            $this->addFlash(
+                'warning',
+                'La liste de favoris non vidée (contactez votre administrateur).'
+            );
+
+        }
 
         return $this->redirectToRoute('favorites');
 

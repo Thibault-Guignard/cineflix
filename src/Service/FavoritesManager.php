@@ -54,6 +54,12 @@ class FavoritesManager
      */
     public function empty()
     {
-        $this->session->remove('favorites');
+        // Si on autorise le vidage de la liste
+        if ($this->emptyEnabled) {
+            $this->session->remove('favorites');
+            return true;
+        }
+
+        return false;
     }
 }
