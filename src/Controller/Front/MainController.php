@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Entity\Movie;
 use App\Model\Movies;
 use App\Repository\MovieRepository;
+use App\Service\FavoritesManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,46 +67,32 @@ class MainController extends AbstractController
     /**
      * @Route("/favorites", name="favorites", methods={"GET", "POST"})
      */
-    public function favorites(Request $request, SessionInterface $session, MovieRepository $movieRepository):Response
+    public function favorites(Request $request, SessionInterface $session, MovieRepository $movieRepository, FavoritesManager $favoritesManager):Response
     {
         $favorites = $session->get('favorites');
 
         if ($request->isMethod('POST')) {
 
             $movieId = $request->request->get('movie');
-
             $movie = $movieRepository->find($movieId);
 
-            $favorites = $session->get('favorites');
+            $added = $favoritesManager->toggle($movie);
 
+            if ($added) {
 
-            if($favorites != null) {
-                if(array_key_exists($movieId, $favorites)) {
+                $this->addFlash(
+                    'success',
+                    $movie->getTitle() . ' -  a été ajouté de votre liste de favoris'
+                );
 
-                    unset($favorites[$movieId]);
-    
-                    $session->set('favorites', $favorites);
-    
-                    $this->addFlash(
-                        'warning',
-                        $movie->getTitle() . ' a été retiré de votre liste de favoris'
-                    );
-    
-                    return $this->redirectToRoute('favorites');
-    
-                }
+            } else {
+
+                $this->addFlash(
+                    'warning',
+                    $movie->getTitle() . ' - a été retiré de votre liste de favoris'
+                );
+
             }
-
-            
-
-            $favorites[$movieId] = $movie;
-
-            $session->set('favorites', $favorites);
-
-            $this->addFlash(
-                'success',
-                $movie->getTitle() .' a été ajouté de votre liste de favoris'
-            );
 
             return $this->redirectToRoute('favorites');
         } 
@@ -118,9 +105,15 @@ class MainController extends AbstractController
      /**
      * @Route("/favorites/delete", name="delete_favorites", methods={"POST"})
      */
-    public function deleteFavorites(SessionInterface $session):Response
+    public function deleteFavorites(FavoritesManager $favoritesManager):Response
     {
-        $session->remove('favorites');
+        $favoritesManager->empty();
+
+        $this->addFlash(
+            'success',
+            'Liste des favoris vidée.'
+        );
+
         return $this->redirectToRoute('favorites');
 
     }
