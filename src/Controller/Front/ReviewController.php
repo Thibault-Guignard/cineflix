@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReviewController extends AbstractController
 {
     /**
-     * @Route("/movie/{id}/review/add", name="review_add", methods={"GET", "POST"})
+     * @Route("/movie/{slug}/review/add", name="review_add", methods={"GET", "POST"})
      */
     public function add(Movie $movie,ManagerRegistry $doctrine,Request $request): Response
     {
