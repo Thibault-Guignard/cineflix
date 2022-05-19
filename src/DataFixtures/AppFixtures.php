@@ -12,6 +12,7 @@ use App\Entity\Person;
 use App\Entity\Season;
 use App\Entity\Casting;
 use App\Entity\User;
+use App\Service\MySlugger;
 use DateTimeImmutable;
 
 use Doctrine\Persistence\ObjectManager;
@@ -21,9 +22,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
+    private $mySlugger;
 
-    public function __construct(SluggerInterface $sluggerInterface) {
-        $this->sluggerInterface = $sluggerInterface;
+    public function __construct(MySlugger $mySlugger) {
+        $this->mySlugger = $mySlugger;
     }
 
     public function load(ObjectManager $manager ): void
@@ -102,7 +104,7 @@ class AppFixtures extends Fixture
 
             $movie->setTitle($faker->unique()->movieTitle());
             //titre slug
-            $movie->setSlug($this->sluggerInterface->slug($movie->getTitle()));
+            $movie->setSlug($this->mySlugger->transformToSlug($movie->getTitle()));
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
             //Description page liste et page show
