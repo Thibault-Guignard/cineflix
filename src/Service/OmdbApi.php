@@ -31,7 +31,7 @@ class OmdbApi
             'https://www.omdbapi.com/',
             [
                 'query' => [
-                    'apiKey' => 'cf1b3e9d',
+                    'apiKey' => $this->apiKey,
                     't' => $title,
                 ]
             ]
