@@ -67,17 +67,17 @@ class MoviesGetposterCommand extends Command
             //on veut acceder a l'API pour recuperer les infos de ce film
 
   
-            $this->omdbApi->fetch($movie->getTitle());
+            $poster = $this->omdbApi->fetchPoster($movie->getTitle());
 
             //on met a jour le poster
-            //$movie->setPoster($poster);
+            $movie->setPoster($poster);
         }
 
         // On flushe (on update les films en base)
         //Pas de persist les objets sont deja persiste en base
         $this->doctrine->getManager()->flush();
 
-        $io->success('Movies slug updated.');
+        $io->success('Movies poster updated.');
 
         return Command::SUCCESS;
     }

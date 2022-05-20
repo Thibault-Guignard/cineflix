@@ -7,6 +7,8 @@ parameters:
     #Si on souhaite remonter la config dans le .en
     favorites_empty_enabled: '%env(bool:FAVORITES_EMPTY_ENABLED)%'
     slugger_to_lower: '%env(bool:SLUGGER_TO_LOWER)%'
+    omdbapi_key: '%env(OMDBAPI_KEY)%'
+
     
 services:
     # default configuration for services in *this* file
@@ -34,3 +36,7 @@ services:
     App\Service\MySlugger:
         arguments:
             $toLower: '%slugger_to_lower%'
+
+    App\Service\OmdbApi:
+        arguments:
+            $apiKey: '%omdbapi_key%'

@@ -10,10 +10,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class OmdbApi
 {
     private $httpClient;
+    private $apiKey;
 
-    public function __construct(HttpClientInterface $httpClient)
+    public function __construct(HttpClientInterface $httpClient, $apiKey)
     {
         $this->httpClient = $httpClient;
+
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -25,11 +28,37 @@ class OmdbApi
         //Cette requete contient le titre du film
         $response = $this->httpClient->request(
             'GET',
-            'https://www.omdbapi.com/?t=rambo&apikey=cf1b3e9d'
+            'https://www.omdbapi.com/',
+            [
+                'query' => [
+                    'apiKey' => 'cf1b3e9d',
+                    't' => $title,
+                ]
+            ]
         );
         // On convertit la réponse en tableau PHP
         $content = $response->toArray();
 
-        dd($content);
+        return $content;
+    }
+
+    /**
+     * Recuper le psoter d'un film donnée
+     * 
+     * @param string $title movie title
+     * 
+     * @return string|null URL du pôster ou null si non trouvé
+     */
+    public function fetchPoster(string $title)
+    {
+        //on va chercher les infos du film
+        $content = $this->fetch($title);
+
+        //la clé poster est elle absente du contenu recu
+        if(!array_key_exists('Poster', $content)) {
+            return null;
+        }
+
+        return $content['Poster'];
     }
 }
