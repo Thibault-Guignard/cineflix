@@ -11,6 +11,7 @@ class MySlugger
 {
 
     private $sluggerInterface;
+    private $toLower;
 
     public function __construct(SluggerInterface $sluggerInterface, $toLower) {
         //rapatriement du slugger de Symfony
@@ -19,13 +20,15 @@ class MySlugger
         $this->toLower = $toLower;
     }
 
-    public function transformToSlug($text)
+    public function slugify($text)
     {
+        $slug = $this->sluggerInterface->slug($text);
+
         if ($this->toLower) {
-            return $this->sluggerInterface->slug($text)->lower();
+            return $this->$slug->lower();
         }
 
-        return $this->sluggerInterface->slug($text);
+        return $this->$slug;
     }
 
 }

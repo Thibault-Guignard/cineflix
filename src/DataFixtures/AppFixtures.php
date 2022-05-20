@@ -104,7 +104,7 @@ class AppFixtures extends Fixture
             //titre
             $movie->setTitle($faker->unique()->movieTitle());
             //titre slug
-            $movie->setSlug($this->mySlugger->transformToSlug($movie->getTitle()));
+            $movie->setSlug($this->mySlugger->slugify($movie->getTitle()));
 
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
