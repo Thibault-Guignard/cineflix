@@ -42,12 +42,12 @@ security:
         # Pas besoin de public access sur les chemins en acces libre 
         # { path: ^/movie/(list|\d+)$, roles: PUBLIC_ACCESS }
         # Si ROLE_USER on peut ajouter une critique sur un film
-        - { path: ^/movie/\d+/review/add, roles: ROLE_USER}
+        - { path: ^/movie/.+/review/add, roles: ROLE_USER}
 
         # BACK
         # On configure d'abord les regles pour le role admin pour bloquer le manager
         - { path: ^/back/(movie|season|casting)/new, roles: ROLE_ADMIN }
-        - { path: ^/back/(movie|season|casting)/.+/edit, roles: ROLE_ADMIN }
+        - { path: ^/back/(movie|season|casting)/\d+/edit, roles: ROLE_ADMIN }
         - { path: ^/back/(movie|season|casting)/\d+, roles: ROLE_ADMIN, methods: POST}
 
         - { path: ^/back/user, roles: ROLE_ADMIN }

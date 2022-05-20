@@ -2,21 +2,22 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
 use Faker;
-use App\DataFixtures\Provider\OflixProvider;
+use Faker\Factory;
+use App\Entity\User;
 
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Entity\Review;
 use App\Entity\Season;
-use App\Entity\Casting;
-use App\Entity\User;
-use App\Service\MySlugger;
 use DateTimeImmutable;
+use App\Entity\Casting;
+use App\Service\MySlugger;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\Provider\OflixProvider;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 
@@ -176,6 +177,31 @@ class AppFixtures extends Fixture
             }
 
             $manager->persist($movie);
+        }
+
+        // @todo Reviews
+        // Création des "Reviews"
+        // On crée 15 à 20 "ratings" 
+        for ($j = 0; $j < mt_rand(15, 20); $j++) {
+            $review = new Review();
+
+            $review
+                ->setRating(mt_rand(2, 5))
+                ->setUsername($faker->userName())
+                ->setEmail($faker->email())
+                ->setContent($faker->realTextBetween(100, 300))
+                ->setReactions($faker->randomElements([
+                    'smile',
+                    'cry',
+                    'think',
+                    'sleep',
+                    'dream',
+                ], mt_rand(1, 4)))
+                // @option Voir le code de Vincent Mitry pour un provider custom
+                ->setWatchedAt(new DateTimeImmutable('-' . mt_rand(1, 50) . ' years'))
+                ->setMovie($movie);
+
+            $manager->persist($review);
         }
 
         $manager->flush();
