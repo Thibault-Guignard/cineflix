@@ -100,16 +100,19 @@ class AppFixtures extends Fixture
         // Les films
         for ($m = 1; $m <= 10; $m++) {             
             $movie = new Movie();
-            //titre
 
+            //titre
             $movie->setTitle($faker->unique()->movieTitle());
             //titre slug
             $movie->setSlug($this->mySlugger->transformToSlug($movie->getTitle()));
+
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
+
             //Description page liste et page show
             $movie->setSummary($faker->paragraph());
             $movie->setSynopsis($faker->text(300));
+            
             //Date
             $movie->setReleaseDate($faker->dateTimeBetween('-100 years'));
             // Entre 30 min et 263 minutes

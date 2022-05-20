@@ -51,7 +51,7 @@ class ReviewController extends AbstractController
             
 
             // On redirige vers la liste
-            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
+            return $this->redirectToRoute('movie_show', ['slug' => $movie->getSlug()]);
 
         }
 

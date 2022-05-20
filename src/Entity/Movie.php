@@ -7,10 +7,13 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * @UniqueEntity(fields={"title"})
+ * 
  */
 class Movie
 {
@@ -22,7 +25,7 @@ class Movie
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=220)
+     * @ORM\Column(type="string", length=220, unique=true)
      * @Assert\NotBlank
      */
     private $title;
@@ -93,7 +96,7 @@ class Movie
     private $reviews;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
