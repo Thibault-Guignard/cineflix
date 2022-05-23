@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=MovieRepository::class)
  * @UniqueEntity(fields={"title"})
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"App\EventListener\MovieListener"})
  */
 class Movie
 {

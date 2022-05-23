@@ -37,8 +37,9 @@ class MovieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+
             $movieRepository->add($movie);
+            
             $this->addFlash('success','Film ajouté');
             return $this->redirectToRoute('back_movie_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,9 +68,10 @@ class MovieController extends AbstractController
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+        if ($form->isSubmitted() && $form->isValid()) {  
+
             $movieRepository->add($movie);
+            
             $this->addFlash('success','Mise a jour effectué');
             return $this->redirectToRoute('back_movie_index', [], Response::HTTP_SEE_OTHER);
         }

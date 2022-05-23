@@ -1,3 +1,4 @@
+
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -47,3 +48,11 @@ services:
         arguments:
             $displayMessageMaintenanceActive: '%maintenance_active%'
             $displayMessageMaintenanceDate: '%maintenance_date%'
+
+    App\EventListener\MovieListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                entity: 'App\Entity\Movie'
+    
+    
