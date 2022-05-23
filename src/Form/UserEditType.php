@@ -32,7 +32,7 @@ class UserEditType extends AbstractType
                 // @link https://symfony.com/doc/current/reference/forms/types/text.html#mapped
                 // Ce champ de ne sera pas mappé sur l'entité automatiquement
                 // la propriété $password de $user ne sera pas modifiée par le traitement du form
-                'mapped'        =>  true,
+                'mapped'        =>  false,
             ])
             ->add('roles',ChoiceType::class,[
                 'label'     =>  'Quels role ?',

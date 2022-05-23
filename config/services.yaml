@@ -8,6 +8,8 @@ parameters:
     favorites_empty_enabled: '%env(bool:FAVORITES_EMPTY_ENABLED)%'
     slugger_to_lower: '%env(bool:SLUGGER_TO_LOWER)%'
     omdbapi_key: '%env(OMDBAPI_KEY)%'
+    maintenance_active: '%env(bool:ACTIVE_MAINTENANCE)%'
+    maintenance_date: '%env(DATE_MAINTENANCE)%'
 
     
 services:
@@ -40,3 +42,8 @@ services:
     App\Service\OmdbApi:
         arguments:
             $apiKey: '%omdbapi_key%'
+
+    App\EventSubscriber\MaintenanceSubscriber:
+        arguments:
+            $displayMessageMaintenanceActive: '%maintenance_active%'
+            $displayMessageMaintenanceDate: '%maintenance_date%'

@@ -70,7 +70,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserEditType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
