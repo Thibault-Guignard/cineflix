@@ -23,11 +23,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
-    private $mySlugger;
-
-    public function __construct(MySlugger $mySlugger) {
-        $this->mySlugger = $mySlugger;
-    }
 
     public function load(ObjectManager $manager ): void
     {
@@ -99,13 +94,12 @@ class AppFixtures extends Fixture
         } 
 
         // Les films
-        for ($m = 1; $m <= 10; $m++) {             
+        for ($m = 1; $m <= 12; $m++) {             
             $movie = new Movie();
 
             //titre
             $movie->setTitle($faker->unique()->movieTitle());
-            //titre slug
-            $movie->setSlug($this->mySlugger->slugify($movie->getTitle()));
+     
 
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
@@ -119,7 +113,7 @@ class AppFixtures extends Fixture
             // Entre 30 min et 263 minutes
             $movie->setDuration($faker->numberBetween(30,263));
             $movie->setPoster('https://picsum.photos/id/'.$faker->numberBetween(1, 100).'/450/300');
-            $movie->setRating($faker->randomFloat(1, 0, 5));
+            $movie->setRating($faker->randomFloat(1, 1, 5));
 
             // Add Seasons
             // On vérifie si l'entitéeMovie est une série ou pas
