@@ -10,7 +10,7 @@ parameters:
     slugger_to_lower: '%env(bool:SLUGGER_TO_LOWER)%'
     omdbapi_key: '%env(OMDBAPI_KEY)%'
     maintenance_active: '%env(bool:ACTIVE_MAINTENANCE)%'
-    maintenance_date: '%env(DATE_MAINTENANCE)%'
+    maintenance_message: '%env(MESSAGE_MAINTENANCE)%'
 
     
 services:
@@ -46,8 +46,8 @@ services:
 
     App\EventSubscriber\MaintenanceSubscriber:
         arguments:
-            $displayMessageMaintenanceActive: '%maintenance_active%'
-            $displayMessageMaintenanceDate: '%maintenance_date%'
+            $maintenanceMessageActive: '%maintenance_active%'
+            $maintenanceMessage: '%maintenance_message%'
 
     App\EventListener\MovieListener:
         tags:

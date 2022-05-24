@@ -9,12 +9,12 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class MaintenanceSubscriber implements EventSubscriberInterface
 {
-    private $displayMessageMaintenanceActive;
-    private $displayMessageMaintenanceDate;
+    private $maintenanceMessageActive;
+    private $maintenanceMessage;
 
-    public function __construct($displayMessageMaintenanceActive , $displayMessageMaintenanceDate) {
-        $this->displayMessageMaintenanceActive = $displayMessageMaintenanceActive;
-        $this->displayMessageMaintenanceDate = $displayMessageMaintenanceDate;
+    public function __construct($maintenanceMessageActive , $maintenanceMessage) {
+        $this->displayMessageMaintenanceActive = $maintenanceMessageActive;
+        $this->displayMessageMaintenanceDate = $maintenanceMessage;
     }
     public function onKernelResponse(ResponseEvent $event)
     {
@@ -46,13 +46,11 @@ class MaintenanceSubscriber implements EventSubscriberInterface
         //contenur de la réponse 
         $content = $response->getContent();
 
-        $date = new DateTime(explode('/',$this->displayMessageMaintenanceDate)[0]); 
-        $hour = explode('/',$this->displayMessageMaintenanceDate)[1]; 
 
         //on modifie le contenut de la repon
         $content = str_replace(
             '</nav>',
-            '</nav><div class="container alert alert-danger mt-3">Maintenance prévue '. $date->format('l d F').' à ' . $hour . '</div>',
+            '</nav><div class="container alert alert-danger mt-3">'. $this->displayMessageMaintenanceDate. '</div>',
             $content
             );
 
