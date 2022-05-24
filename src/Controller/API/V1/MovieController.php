@@ -2,6 +2,7 @@
 
 namespace App\Controller\API\V1;
 
+use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,5 +24,19 @@ class MovieController extends AbstractController
         $moviesList = $movieRepository->findAll();
         
         return $this->json($moviesList,200,[],['groups' => 'movies_get_collection']);
+    }
+
+    /**
+     * @Route("/movies/{id}", name="movies_get_item" , methods={"GET"} ,requirements={"id"="\d+"})
+     * 
+     * @return mixed
+     */
+    public function moviesGetItem(Movie $movie = null): Response
+    {
+        if ($movie === null) {
+            throw $this->createNotFoundException('Le film ou la série n\'existe pas');
+        }
+
+        return $this->json($movie,200,[],['groups' => 'movies_get_item']);
     }
 }

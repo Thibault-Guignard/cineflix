@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 
@@ -25,11 +26,13 @@ class Season
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"movies_get_item"})
      */
     private $number;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"movies_get_item"})
      */
     private $episodesNumber;
 

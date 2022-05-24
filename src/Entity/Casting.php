@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CastingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CastingRepository::class)
@@ -20,16 +21,20 @@ class Casting
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"movies_get_item"})
      */
     private $role;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"movies_get_item"})
      */
     private $creditOrder;
 
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="castings")
+     * @Groups({"movies_get_item"})
+     * 
      */
     private $person;
 

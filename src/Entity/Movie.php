@@ -23,19 +23,20 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection" , "movies_get_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=220, unique=true)
      * @Assert\NotBlank
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection", "movies_get_item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"movies_get_item"})
      */
     private $releaseDate;
 
@@ -43,7 +44,7 @@ class Movie
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\LessThan(1700)
      * @Assert\GreaterThan(0)
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection", "movies_get_item"})
      */
     private $duration;
 
@@ -55,6 +56,7 @@ class Movie
     /**
      * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", cascade={"remove"})
      * @ORM\OrderBy({"creditOrder"="ASC"})
+     * @Groups({"movies_get_item"})
      */
     private $castings;
 
@@ -62,6 +64,7 @@ class Movie
      * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
      * 
      * @Assert\Count(min=1 , minMessage="Vous devez sélectionner au moins 1 genre.")
+     * @Groups({"movies_get_item"})
      */
     private $genres;
 
@@ -76,26 +79,27 @@ class Movie
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
+     * @Groups({"movies_get_item"})
      */
     private $synopsis;
 
     /**
      * @ORM\Column(type="string", length=2003)
      * @Assert\Url
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection", "movies_get_item"})
      */
     private $poster;
 
     /**
      * @ORM\Column(type="decimal", precision=2, scale=1,nullable=true)
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection", "movies_get_item"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=6)
      * @Assert\NotBlank
-     * @Groups({"movies_get_collection"})
+     * @Groups({"movies_get_collection", "movies_get_item"})
      */
     private $type;
 
