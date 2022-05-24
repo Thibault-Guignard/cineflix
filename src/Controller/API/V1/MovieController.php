@@ -80,10 +80,11 @@ class MovieController extends AbstractController
     ) {
         // Recuperer le contenu JSON qui se trouve dans la requete
         $jsonContent = $request->getContent();
-
+      
         // On "déserialise" le contenu JSON en entité de tyope Movie
         $movie =$serializer->deserialize($jsonContent,Movie::class,'json');       
-      
+
+   
         // On valide l'entité
         $errors = $validator->validate($movie);
         $errorsList = [];
@@ -115,7 +116,9 @@ class MovieController extends AbstractController
             $newGenre = $genreRepository->findOneBy(
                 ['name' => $genreMovie]
             );
-
+            if ($newGenre === null) {
+                return $this->json(['property' => 'Genres', 'message' => 'Le genre selectionné n\'exite pas.'],Response::HTTP_NOT_FOUND);
+            }
             //on l'ajoute au film
             $movie->addGenre($newGenre);
         }
