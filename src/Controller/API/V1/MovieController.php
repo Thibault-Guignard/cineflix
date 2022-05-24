@@ -45,7 +45,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/movies/random", name="movies_get_item" , methods={"GET"})
+     * @Route("/movies/random", name="movies_get_random_item" , methods={"GET"})
      * 
      * @return mixed
      */

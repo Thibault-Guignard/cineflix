@@ -3,9 +3,10 @@
 namespace App\Controller\API\V1;
 
 use App\Entity\Genre;
-use App\Entity\Movie;
+
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
+
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
