@@ -54,5 +54,13 @@ services:
             -
                 name: 'doctrine.orm.entity_listener'
                 entity: 'App\Entity\Movie'
+                event: 'prePersist'
+                method: 'slugifyTitle'
+
+            -
+                name: 'doctrine.orm.entity_listener'
+                entity: 'App\Entity\Movie'
+                event: 'preUpdate'
+                method: 'slugifyTitle'
     
     

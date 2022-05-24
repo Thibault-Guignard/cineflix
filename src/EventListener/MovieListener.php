@@ -15,15 +15,6 @@ class MovieListener
         $this->mySlugger = $mySlugger;
     }
     
-    public function prePersist(Movie $movie): void
-    {
-        $this->slugifyTitle($movie);
-    }
-
-    public function preUpdate(Movie $movie): void
-    {
-        $this->slugifyTitle($movie);
-    }
 
     public function slugifyTitle(Movie $movie)
     {

@@ -349,10 +349,18 @@ class Movie
         return $this->updatedAt;
     }
 
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+    
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAt(): self
+    public function setUpdatedValue()
     {
         $this->updatedAt = new DateTimeImmutable();
 
