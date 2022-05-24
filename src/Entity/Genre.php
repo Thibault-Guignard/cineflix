@@ -17,13 +17,14 @@ class Genre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"movies_get_item"})
+     * @Groups({"movies_get_item","genres_get_collection"})
+     * @
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"movies_get_item"})
+     * @Groups({"movies_get_item","genres_get_collection"})
      */
     private $name;
 

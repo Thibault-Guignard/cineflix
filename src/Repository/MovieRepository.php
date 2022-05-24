@@ -111,6 +111,25 @@ class MovieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Find Movies By Name Genre
+     */
+    public function findAllMovieByNameGenre($name)
+    {
+        $sql=   " SELECT * FROM `movie`
+                INNER JOIN `movie_genre`
+                ON `movie_genre`.`movie_id`=`movie`.`id`
+                INNER JOIN `genre`
+                ON `genre`.`id`=`movie_genre`.`genre_id`
+                WHERE `genre`.`name`=:name
+                ";
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $results = $stmt->executeQuery(['name' => $name]);
+
+        return $results->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */

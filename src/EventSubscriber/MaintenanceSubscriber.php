@@ -22,7 +22,7 @@ class MaintenanceSubscriber implements EventSubscriberInterface
             return;
         }
         
-        dump($this->displayMessageMaintenanceDate);
+ 
         //si ca n'est pas la requete principale on ne fait rien
         if (!$event->isMainRequest()) {
             // don't do anything if it's not the main request

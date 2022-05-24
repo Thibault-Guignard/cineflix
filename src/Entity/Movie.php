@@ -50,6 +50,7 @@ class Movie
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie", orphanRemoval=true)
+     * @Groups({"movies_get_item"})
      */
     private $seasons;
 
@@ -250,6 +251,17 @@ class Movie
     public function removeGenre(Genre $genre): self
     {
         $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    //efface tous les genres d'un film donné
+    public function removeAllGenre(): self
+    {
+        $genresList = $this->getGenres();
+        foreach($genresList as $oneGenre) {
+            $this->removeGenre($oneGenre);
+        }
 
         return $this;
     }
