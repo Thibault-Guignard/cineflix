@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -22,12 +23,14 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"movies_get_collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=220, unique=true)
      * @Assert\NotBlank
+     * @Groups({"movies_get_collection"})
      */
     private $title;
 
@@ -40,6 +43,7 @@ class Movie
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\LessThan(1700)
      * @Assert\GreaterThan(0)
+     * @Groups({"movies_get_collection"})
      */
     private $duration;
 
@@ -65,6 +69,7 @@ class Movie
      * @ORM\Column(type="string", length=500)
      * @Assert\NotBlank
      * @Assert\Length(min=100,max=500)
+     * @Groups({"movies_get_collection"})
      */
     private $summary;
 
@@ -77,17 +82,20 @@ class Movie
     /**
      * @ORM\Column(type="string", length=2003)
      * @Assert\Url
+     * @Groups({"movies_get_collection"})
      */
     private $poster;
 
     /**
      * @ORM\Column(type="decimal", precision=2, scale=1,nullable=true)
+     * @Groups({"movies_get_collection"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=6)
      * @Assert\NotBlank
+     * @Groups({"movies_get_collection"})
      */
     private $type;
 
