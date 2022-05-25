@@ -17,19 +17,20 @@ class Genre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"movies_get_item","genres_get_collection"})
+     * @Groups({"movies_get_item","genres_get_collection", "genres_get_movies_collection"})
      * @
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"movies_get_item","genres_get_collection"})
+     * @Groups({"movies_get_item","genres_get_collection", "genres_get_movies_collection"})
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
+     * @Groups({"genres_get_movies_collection"})
      */
     private $movies;
 

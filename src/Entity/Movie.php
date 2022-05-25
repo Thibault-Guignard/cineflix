@@ -258,9 +258,9 @@ class Movie
     //efface tous les genres d'un film donné
     public function removeAllGenre(): self
     {
-        $genresList = $this->getGenres();
-        foreach($genresList as $oneGenre) {
-            $this->removeGenre($oneGenre);
+
+        foreach($this->getGenres() as $genre) {
+            $this->removeGenre($genre);
         }
 
         return $this;

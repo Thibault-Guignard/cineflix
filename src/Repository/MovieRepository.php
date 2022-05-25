@@ -116,13 +116,14 @@ class MovieRepository extends ServiceEntityRepository
      */
     public function findAllMovieByNameGenre($name)
     {
-        $sql=   " SELECT * FROM `movie`
+        $sql="  SELECT * FROM `movie`
                 INNER JOIN `movie_genre`
                 ON `movie_genre`.`movie_id`=`movie`.`id`
                 INNER JOIN `genre`
                 ON `genre`.`id`=`movie_genre`.`genre_id`
                 WHERE `genre`.`name`=:name
-                ";
+            ";
+            
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
         $results = $stmt->executeQuery(['name' => $name]);
