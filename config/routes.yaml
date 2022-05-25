@@ -1,3 +1,7 @@
 #index:
 #  path: /
 #  controller: App\Controller\MainController::home
+
+# Route qui sert a LexiJWT pour intercepeter notre user JSON
+api_login_check:
+    path: /api/v1/login_check

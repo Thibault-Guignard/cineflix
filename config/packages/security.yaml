@@ -14,9 +14,27 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+        #Firewall qui intercepete la route de login
+        login:
+            pattern: ^/api/v1/login
+            stateless: true
+            json_login:
+                check_path: /api/v1/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        #Firew<all qui gere les routes de l'api
+        api:
+            pattern:   ^/api/v1
+            stateless: true
+            jwt: ~
+
+        #Route de dev
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        #route d'Oflix
         main:
             lazy: true
             provider: app_user_provider
@@ -54,6 +72,9 @@ security:
 
         #Acces Manager bloque précédement 
         - { path: ^/back, roles: ROLE_MANAGER}
+
+        #Routes de l'API
+        - { path: ^/api/v1/movies, roles: ROLE_ADMIN, methods: POST}
        
     role_hierarchy:
         # Le Role Manager hérite de l'user
