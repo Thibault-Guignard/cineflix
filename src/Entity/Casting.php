@@ -21,19 +21,19 @@ class Casting
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      */
     private $role;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      */
     private $creditOrder;
 
     /**
      * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="castings")
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      * 
      */
     private $person;

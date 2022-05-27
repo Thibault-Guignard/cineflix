@@ -3,6 +3,7 @@
 namespace App\Controller\API\V1;
 
 use App\Entity\Movie;
+use App\Repository\CastingRepository;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,13 +41,22 @@ class MovieController extends AbstractController
      * 
      * @return mixed
      */
-    public function moviesGetItem(Movie $movie = null): Response
+    public function moviesGetItem(Movie $movie = null, CastingRepository $castingRepository): Response
     {
         if ($movie === null) {
             return $this->json(['error' => 'Le film ou la série n\'existe pas'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($movie,Response::HTTP_OK,[],['groups' => 'movies_get_item']);
+         // On va chercher notre casting via notre propre requetes
+        $castingList = $castingRepository->findAllByMovieJoinedToPerson($movie);
+        //dd($castingList);
+        return $this->json([ 
+            'movie' => $movie,
+            'casting' => $castingList],
+            Response::HTTP_OK,
+            [],
+            ['groups' => ['movies_get_item','casting_get_item']
+            ]);
     }
 
     /**

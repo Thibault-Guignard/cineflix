@@ -17,19 +17,19 @@ class Person
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"movies_get_item"})
+     * @Groups({"casting_get_item"})
      */
     private $lastname;
 

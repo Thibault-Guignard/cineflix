@@ -57,7 +57,7 @@ class Movie
     /**
      * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", cascade={"remove"})
      * @ORM\OrderBy({"creditOrder"="ASC"})
-     * @Groups({"movies_get_item"})
+     * Groups({"movies_get_item"})
      */
     private $castings;
 
