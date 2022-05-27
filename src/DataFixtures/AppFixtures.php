@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
         // Tableau vide pour nos genres
         $genresList = [];
 
-        for ($i = 1; $i <= 30; $i++) {
+        for ($i = 1; $i <= 25; $i++) {
 
             // Nouveau genre
             $genre = new Genre();
@@ -94,7 +94,7 @@ class AppFixtures extends Fixture
         } 
 
         // Les films
-        for ($m = 1; $m <= 12; $m++) {             
+        for ($m = 1; $m <= 100; $m++) {             
             $movie = new Movie();
 
             //titre
@@ -136,7 +136,7 @@ class AppFixtures extends Fixture
             }
 
             // On ajoute de 1 à 3 genres au hasard pour chaque film
-            for ($g = 1; $g <= mt_rand(1, 3); $g++) {
+            for ($g = 1; $g <= mt_rand(1, 5); $g++) {
 
                 // Un genre au hasard entre 0 et la longueur du tableau - 1
                 // on va chercher un index entre 0 et 19 (20 - 1)

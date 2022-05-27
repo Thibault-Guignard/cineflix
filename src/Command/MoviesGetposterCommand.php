@@ -37,40 +37,52 @@ class MoviesGetposterCommand extends Command
 
     protected function configure(): void
     {
-/*         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ; */
+        $this
+            ->addArgument('title', InputArgument::OPTIONAL, 'Movie title to get');
+            //->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+       
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
+        $movieTitle = $input->getArgument('title');
+
         $io->info('Updating ... Posters');
         // $arg1 = $input->getArgument('arg1');
 
-        //if ($arg1) {
-        //    $io->note(sprintf('You passed an argument: %s', $arg1));
-        //}
-       
+        if ($movieTitle !== null) {
 
-        //if ($input->getOption('option1')) {
-        //    // ...
-        //}
-        //on veut récuperer tous les films (via MovieRepository + findAll)
-        $moviesList = $this->movieRepository->findAll();
+            $movie = $this->movieRepository->findOneByTitle($movieTitle);
+
+            // Film non trouvé ?
+            if ($movie === null) {
+                $io->error('Film non trouvé');
+
+                return COMMAND::INVALID;
+            }
+
+            // On ajoute le film au tableau parcouru ci-dessous
+            $movies = [$movie];
+
+        } else {
+            // Récupérer tous les films (via MovieRepository + findAll())
+            $movies = $this->movieRepository->findAll();
+        }
 
         // Pour chaque film
-            //On slugifie le film via MySlugger
-        foreach ($moviesList as $movie) {
+        foreach ($io->progressIterate($movies) as $movie) {
             //on veut acceder a l'API pour recuperer les infos de ce film
-
   
             $poster = $this->omdbApi->fetchPoster($movie->getTitle());
 
-            //on met a jour le poster
-            $movie->setPoster($poster);
+            if ($poster !== null ) {
+                $movie->setPoster($poster);
+            } else {
+                $movie->setPoster('https://picsum.photos/id/'. random_int(1, 100).'/450/300');
+            }
+                       
         }
 
         // On flushe (on update les films en base)
