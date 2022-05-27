@@ -4,11 +4,17 @@ namespace App\Controller\Front;
 
 use App\Entity\Movie;
 use App\Model\Movies;
-use App\Repository\MovieRepository;
+use App\Repository\GenreRepository;
 use App\Service\FavoritesManager;
+use App\Repository\MovieRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use ContainerRaU57p3\PaginatorInterface_82dac15;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,21 +26,29 @@ class MainController extends AbstractController
      * @return Response
      * @Route("/", name="home", methods={"GET"})
      */
-    public function home(MovieRepository $movieRepository): Response
+    public function home(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Request $request,
+        GenreRepository $genreRepository): Response
     {
+        $dql = "SELECT m FROM App\Entity\Movie m ORDER BY m.releaseDate DESC";
+        $query = $em->createQuery($dql);
 
-        // on récupère les données depuis le modèle
-        //trier oar date de sortie releaseDate
-        /*         $moviesList = $movieRepository->findBy(
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            10
+        );
+
+        $genreList = $genreRepository->findBy(
             [],
-            ['releaseDate' => 'DESC'],
-            10,
-        ); */
+            ['name' => 'ASC']
+        );
 
-        $moviesList = $movieRepository->findAllOrderedByRealaseDateDscDBL();
-    
-        return $this->render('front/main/home.html.twig', [
-            'moviesList' => $moviesList,
+        return $this->render('front/main/home.html.twig',[
+            'pagination' => $pagination,
+            'genreList' => $genreList
         ]);
     }
 
@@ -67,7 +81,11 @@ class MainController extends AbstractController
     /**
      * @Route("/favorites", name="favorites", methods={"GET", "POST"})
      */
-    public function favorites(Request $request, SessionInterface $session, MovieRepository $movieRepository, FavoritesManager $favoritesManager):Response
+    public function favorites(
+        Request $request,
+        SessionInterface $session,
+        MovieRepository $movieRepository,
+        FavoritesManager $favoritesManager):Response
     {
         $favorites = $session->get('favorites');
 
@@ -127,7 +145,5 @@ class MainController extends AbstractController
         }
 
         return $this->redirectToRoute('favorites');
-
     }
-
 }

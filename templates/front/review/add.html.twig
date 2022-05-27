@@ -1,6 +1,5 @@
 {% extends "base.html.twig" %}
 
-
 {% block title %}Critique - {{movie.title}} {% endblock %}
 
 {# On vient redéfinir / surcharger / override le contenu du block body #}
@@ -11,7 +10,6 @@
 
         <div class="col">
             <h1>Ajout une critique sur le film {{movie.title}}</h1>
-
 
             {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id': 'form__post'}}) }}
 

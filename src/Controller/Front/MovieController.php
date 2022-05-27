@@ -6,10 +6,13 @@ use App\Entity\Movie;
 use App\Entity\Review;
 use App\Form\ReviewType;
 use Doctrine\ORM\Mapping\Id;
+use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
-use App\Repository\CastingRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\CastingRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,26 +20,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MovieController extends AbstractController
 {
-
     /**
      * Display alls movies
      *
      * @return Response
      * @Route("/movie/list", name="movie_list")
      */
-    public function list(MovieRepository $movieRepository): Response
+    public function list(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Request $request,
+        GenreRepository $genreRepository): Response
     {
-        // on récupère les données depuis le modèle
-        // par ordre alphabeitque
-        /* $moviesList = $movieRepository->findBy(
-            [],
-            ['title' => 'ASC']
-        ); */
+        $dql = "SELECT m FROM App\Entity\Movie m ORDER BY m.title ASC";
+        $query = $em->createQuery($dql);
 
-        $moviesList =$movieRepository->findAllOrderedByTitleASC();
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            10
+        );
+
+        $genreList = $genreRepository->findBy(
+            [],
+            ['name' => 'ASC']
+        );
 
         return $this->render('front/movie/list.html.twig',[
-            'moviesList' => $moviesList,
+            'pagination' => $pagination,
+            'genreList' => $genreList,
         ]);
     }
 
@@ -47,17 +59,15 @@ class MovieController extends AbstractController
      * @return Response
      * @Route("/movie/{slug}" , name="movie_show" , methods={"GET"})
      */
-    public function show(Movie $movie = null, CastingRepository $castingRepository,ReviewRepository $reviewRepository): Response
+    public function show(
+        Movie $movie = null,
+        CastingRepository $castingRepository,
+        ReviewRepository $reviewRepository): Response
     {
 
         if ($movie === null) {
             throw $this->createNotFoundException('Le film ou la série n\'existe pas');
         }
-
-        /* $castingList = $castingRepository->findBy(
-            ['movie' => $movie], 
-            ['creditOrder' => 'ASC']
-        ); */
 
         // On va chercher notre casting via notre propre requetes
         $castingList = $castingRepository->findAllByMovieJoinedToPerson($movie);
@@ -81,13 +91,9 @@ class MovieController extends AbstractController
      * @Route("/movie/searching", name="movie_search", methods={"GET"})
      */
     public function search(): Response
-    { 
-    
+    {     
         return $this->render('front/searching.html.twig', [
 
         ]);
     }
-
-
-
 }
