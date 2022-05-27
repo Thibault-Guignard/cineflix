@@ -6,12 +6,17 @@ use App\Entity\Movie;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
 /**
  * Classe qui s'occupe des ressources de type Movie
@@ -248,5 +253,54 @@ class MovieController extends AbstractController
             // Pour éviter les références circulaires
             ['groups' => 'movies_get_item']
         );
+    }
+
+    /**
+     * @Route("/movies/{id}", name="movies_put", methods={"PATCH","PUT"})
+     */
+
+    public function movieUpdateItem (
+        Movie $movie = null,
+        Request $request,
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator
+    ) {
+
+        //film trouvé ?
+        if ($movie === null) {
+            return $this->json(['error' => 'Le film ou la série n\'existe pas'], Response::HTTP_NOT_FOUND);
+        }
+
+        //on recupere les données a modifier
+        $data = json_decode($request->getContent(),true);
+
+        //on boucle sur les données a modifer , on crée le setter et on envoie la nouvelle donnée
+        foreach($data as $property => $value) {
+            $setter = 'set' . $property ;
+            $movie->$setter($value) ;
+        }
+
+        //on checke les erreurs si des erreurs on enregistre pas 
+        $errors = $validator->validate($movie);
+        
+        if ($errors->count() > 0) {
+            $cleanErrors = [];
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
+                $property = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $cleanErrors[$property][] = $message;
+            }
+          
+            return $this->json($cleanErrors, Response::HTTP_NO_CONTENT);
+        }
+
+        //si pas d'erreur on sauvegarde le movie modifié
+        $em = $doctrine->getManager();
+        $em->persist($movie);
+        $em->flush();
+
+
+        return $this->json($movie,Response::HTTP_OK,[],['groups' => 'movies_get_item']);
     }
 }
