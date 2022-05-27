@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Review;
 use App\Form\ReviewType;
@@ -96,4 +97,40 @@ class MovieController extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route("/movie/genre/{id}", name="movie_by_genre", methods={"GET"} )
+     */
+    public function movieByOneGenre(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        Request $request,
+        GenreRepository $genreRepository,
+        Genre $genre) 
+    {
+        $dql = "SELECT m FROM App\Entity\Movie m 
+                JOIN m.genres g WHERE g.id = :id
+                ORDER BY m.title ASC
+                ";
+
+        $query = $em->createQuery($dql);
+
+        $pagination = $paginator->paginate(
+            $query->setParameter('id',$genre->getId()),
+            $request->query->getInt('page',1),
+            10
+        );
+
+        $genreList = $genreRepository->findBy(
+            [],
+            ['name' => 'ASC']
+        );
+
+        return $this->render('front/movie/list_by_genre.html.twig',[
+            'pagination' => $pagination,
+            'genreList' => $genreList,
+            'genre' => $genre,
+        ]);
+    }
+    
 }
