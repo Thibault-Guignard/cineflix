@@ -100,7 +100,7 @@ class MainController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $movie->getTitle() . ' -  a été ajouté de votre liste de favoris'
+                    $movie->getTitle() . '  a été ajouté de votre liste de favoris'
                 );
 
             } else {
