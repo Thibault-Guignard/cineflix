@@ -94,7 +94,7 @@ class AppFixtures extends Fixture
         } 
 
         // Les films
-        for ($m = 1; $m <= 100; $m++) {             
+        for ($m = 1; $m <= 100; $m++) {
             $movie = new Movie();
 
             //titre
@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
             //Date
             $movie->setReleaseDate($faker->dateTimeBetween('-100 years'));
             // Entre 30 min et 263 minutes
-            $movie->setDuration($faker->numberBetween(30,263));
+            $movie->setDuration($faker->numberBetween(30, 263));
             $movie->setPoster('https://picsum.photos/id/'.$faker->numberBetween(1, 100).'/450/300');
             $movie->setRating($faker->randomFloat(1, 1, 5));
 
@@ -171,15 +171,15 @@ class AppFixtures extends Fixture
             }
 
             $manager->persist($movie);
-        }
+        
 
-        // @todo Reviews
-        // Création des "Reviews"
-        // On crée 15 à 20 "ratings" 
-        for ($j = 0; $j < mt_rand(15, 20); $j++) {
-            $review = new Review();
+            // @todo Reviews
+            // Création des "Reviews"
+            // On crée 15 à 20 "ratings"
+            for ($j = 0; $j < mt_rand(15, 20); $j++) {
+                $review = new Review();
 
-            $review
+                $review
                 ->setRating(mt_rand(2, 5))
                 ->setUsername($faker->userName())
                 ->setEmail($faker->email())
@@ -195,7 +195,10 @@ class AppFixtures extends Fixture
                 ->setWatchedAt(new DateTimeImmutable('-' . mt_rand(1, 50) . ' years'))
                 ->setMovie($movie);
 
-            $manager->persist($review);
+                $manager->persist($review);
+            }
+
+            $manager->persist($movie);
         }
 
         $manager->flush();

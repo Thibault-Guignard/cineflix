@@ -75,7 +75,7 @@
                     </a>
 
                     {% for review in reviewsList %}
-                         <li>{{ review.username }} : {{ review.content }}</li>
+                         <li>{{ review.user.email }} : <i>{{ review.content }}</i></li>
                     {% endfor %}
                 </div>
             </div>

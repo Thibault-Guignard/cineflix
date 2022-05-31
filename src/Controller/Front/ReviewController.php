@@ -39,6 +39,8 @@ class ReviewController extends AbstractController
         
             //on associe le film a la review
             $review->setMovie($movie);
+            //on recupere l'user
+            $review->setUser($this->getUser());
             //Le Formulaire a mis a jour l'entité Review automatiquement
             // On va faire appel au Manager de Doctrine
             $entityManager = $doctrine->getManager();
