@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <div class="container">
 
-    {# <h1>{{ status_text }} ({{status_code}})</h1> #}
     <h1 class="mt-3">{{ exception.message }}</h1>
 
-    <p>Visiblement, quelque chose s'est mal passée</p>
+    <p>Visiblement, quelque chose s'est mal passé...</p>
 
-    <p><img src="{{ asset('images/travoltaconfused.jpg') }}"></p>
-
-
+    <p><img src="{{ asset('images/confusedtravolta.jpg') }}"></p>
 
 </div>
+
 {% endblock %}
