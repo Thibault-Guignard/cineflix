@@ -15,6 +15,7 @@ use DateTimeImmutable;
 use App\Entity\Casting;
 use App\Service\MySlugger;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\OflixProvider;
@@ -23,9 +24,46 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
+        /**
+     * Les propriétés qui vont accueillir les services nécessaires à la classe de Fixtures
+     */
+    private $connection;
+
+    /**
+     * On récupère les services utiles via le constructeur
+     */
+    public function __construct(Connection $connection)
+    {
+        // On récupère la connexion à la BDD (DBAL ~= PDO)
+        // pour exécuter des requêtes manuelles en SQL pur
+        $this->connection = $connection;
+    }
+    
+    /**
+     * Permet de TRUNCATE les tables et de remettre les AI à 1
+     */
+    private function truncate()
+    {
+        // On passe en mode SQL ! On cause avec MySQL
+        // Désactivation la vérification des contraintes FK
+        $this->connection->executeQuery('SET foreign_key_checks = 0');
+        // On tronque
+        $this->connection->executeQuery('TRUNCATE TABLE casting');
+        $this->connection->executeQuery('TRUNCATE TABLE genre');
+        $this->connection->executeQuery('TRUNCATE TABLE movie');
+        $this->connection->executeQuery('TRUNCATE TABLE movie_genre');
+        $this->connection->executeQuery('TRUNCATE TABLE person');
+        $this->connection->executeQuery('TRUNCATE TABLE review');
+        $this->connection->executeQuery('TRUNCATE TABLE season');
+        $this->connection->executeQuery('TRUNCATE TABLE user');
+        // etc.
+    }
 
     public function load(ObjectManager $manager ): void
     {
+        //on TRUNCATE manuellemen t
+        $this->truncate();
+        
         $faker = Faker\Factory::create('fr_FR');   
         
         //On peut fixer le '"seed" du générateur
@@ -95,19 +133,15 @@ class AppFixtures extends Fixture
 
         // Les films
         for ($m = 1; $m <= 100; $m++) {
+
             $movie = new Movie();
-
             //titre
-            $movie->setTitle($faker->unique()->movieTitle());
-     
-
+            $movie->setTitle($faker->unique()->movieTitle());    
             //Type
             $movie->setType($faker->randomElement(['Film','Série']));
-
             //Description page liste et page show
             $movie->setSummary($faker->paragraph());
             $movie->setSynopsis($faker->text(300));
-            
             //Date
             $movie->setReleaseDate($faker->dateTimeBetween('-100 years'));
             // Entre 30 min et 263 minutes
@@ -137,7 +171,6 @@ class AppFixtures extends Fixture
 
             // On ajoute de 1 à 3 genres au hasard pour chaque film
             for ($g = 1; $g <= mt_rand(1, 5); $g++) {
-
                 // Un genre au hasard entre 0 et la longueur du tableau - 1
                 // on va chercher un index entre 0 et 19 (20 - 1)
                 $randomGenre = $genresList[mt_rand(0, count($genresList) - 1)];
@@ -168,12 +201,8 @@ class AppFixtures extends Fixture
 
                 // On persiste
                 $manager->persist($casting);
-            }
+            }       
 
-            $manager->persist($movie);
-        
-
-            // @todo Reviews
             // Création des "Reviews"
             // On crée 15 à 20 "ratings"
             for ($j = 0; $j < mt_rand(15, 20); $j++) {
@@ -181,8 +210,7 @@ class AppFixtures extends Fixture
 
                 $review
                 ->setRating(mt_rand(2, 5))
-                ->setUsername($faker->userName())
-                ->setEmail($faker->email())
+                ->setUser($user)
                 ->setContent($faker->realTextBetween(100, 300))
                 ->setReactions($faker->randomElements([
                     'smile',
