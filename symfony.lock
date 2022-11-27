@@ -111,10 +111,10 @@
         "version": "2.0.0"
     },
     "lcobucci/jwt": {
-        "version": "4.1.5"
+        "version": "4.2.1"
     },
     "lexik/jwt-authentication-bundle": {
-        "version": "2.15",
+        "version": "2.16",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
