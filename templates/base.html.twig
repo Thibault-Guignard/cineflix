@@ -16,7 +16,7 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
 
-    <title>O'Flix - {% block title %}{% endblock %}</title>
+    <title>Cinéflix - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -32,8 +32,8 @@
 
         <div class="container-fluid">
             <a href="{{ path('home') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none header-logo">
-                <img src="{{ asset('favicon.png') }}" height="24" alt="Logo O'flix">
-                <span class="header-logo__title">O'flix</span>
+                <img src="{{ asset('favicon.png') }}" height="24" alt="Logo Cinéflix">
+                <span class="header-logo__title">Cinéflix</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent">
@@ -102,7 +102,7 @@
 
     <!-- footer -->
     <footer class="container-fluid py-4 border-top text-center">
-        <span class="text-muted">O'flix made with &hearts; at O'clock !
+        <span class="text-muted">Cinéflix made with &hearts; at O'clock !
             {% if app.session.get('netflix_theme',true) == true  %}
             <br><small>Thème :<a href="{{path('theme_toggle')}}" class="link-secondary text-decoration-none"><i class="bi bi-toggle-on mx-1"></i>Netflix</a></small>
             {% else %}

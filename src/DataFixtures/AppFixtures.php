@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
         //On peut fixer le '"seed" du générateur
         $faker->seed(2022);
 
-        // on instancie notre provider custom O'Flix
+        // on instancie notre provider custom Cinéflix
         $oflixProvider = new OflixProvider();
         //on ajoute notre provider a Faker
         $faker->addProvider($oflixProvider);
